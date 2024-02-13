@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataModelInfo>
+  <version>1</version>
+  <moduleName>TestComponent</moduleName>
+  <author></author>
+  <description></description>
+  <library />
+  <objects>
+    <object>
+      <name>TestComponent</name>
+      <objectType>object</objectType>
+      <functions>
+        <func_GetParamUlongValue>TestComponent_GetParamUlongValue</func_GetParamUlongValue>
+        <func_SetParamUlongValue>TestComponent_SetParamUlongValue</func_SetParamUlongValue>
+		<func_GetParamIntValue>TestComponent_GetParamIntValue</func_GetParamIntValue>
+		<func_SetParamIntValue>TestComponent_SetParamIntValue</func_SetParamIntValue>
+      	<func_GetParamStringValue>TestComponent_GetParamStringValue</func_GetParamStringValue>
+      	<func_SetParamStringValue>TestComponent_SetParamStringValue</func_SetParamStringValue>
+      	<func_GetParamBoolValue>TestComponent_GetParamBoolValue</func_GetParamBoolValue>
+      	<func_SetParamBoolValue>TestComponent_SetParamBoolValue</func_SetParamBoolValue>
+      </functions>
+      <parameters>
+        <parameter>
+          <name>TestSampleParamUlong</name>
+          <type>unsignedInt</type>
+          <syntax>uint32</syntax>
+          <writable>true</writable>
+        </parameter> 
+      </parameters>
+    </object>
+ </objects>
+</dataModelInfo>
