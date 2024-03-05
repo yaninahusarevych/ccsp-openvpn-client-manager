@@ -70,6 +70,12 @@ COSA_Init
 	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_GetParamIntValue",  TestComponent_GetParamIntValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_SetParamIntValue",  TestComponent_SetParamIntValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_Commit",  TestComponent_Commit);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_GetEntryCount",  TestTable_GetEntryCount);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_GetEntry",  TestTable_GetEntry);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_IsUpdated",  TestTable_IsUpdated);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_Synchronize",  TestTable_Synchronize);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_GetParamStringValue",  TestTable_GetParamStringValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_SetParamStringValue",  TestTable_SetParamStringValue);
     return  0;
 }
 

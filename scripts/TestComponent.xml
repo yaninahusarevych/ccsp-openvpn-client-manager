@@ -9,11 +9,12 @@
     <object>
       <name>TestComponent</name>
       <objectType>object</objectType>
+      <maxInstance>128</maxInstance>
       <functions>
         <func_GetParamUlongValue>TestComponent_GetParamUlongValue</func_GetParamUlongValue>
         <func_SetParamUlongValue>TestComponent_SetParamUlongValue</func_SetParamUlongValue>
-		<func_GetParamIntValue>TestComponent_GetParamIntValue</func_GetParamIntValue>
-		<func_SetParamIntValue>TestComponent_SetParamIntValue</func_SetParamIntValue>
+        <func_GetParamIntValue>TestComponent_GetParamIntValue</func_GetParamIntValue>
+        <func_SetParamIntValue>TestComponent_SetParamIntValue</func_SetParamIntValue>
       	<func_GetParamStringValue>TestComponent_GetParamStringValue</func_GetParamStringValue>
       	<func_SetParamStringValue>TestComponent_SetParamStringValue</func_SetParamStringValue>
       	<func_GetParamBoolValue>TestComponent_GetParamBoolValue</func_GetParamBoolValue>
@@ -26,7 +27,36 @@
           <syntax>uint32</syntax>
           <writable>true</writable>
         </parameter> 
+        <parameter>
+          <name>MyString</name>
+          <type>string</type>
+          <syntax>string</syntax>
+          <writable>true</writable>
+        </parameter> 
       </parameters>
+       <objects>
+            <object>
+                <name>TestTable</name>
+                <objectType>dynamicTable</objectType>
+                <maxInstance>512</maxInstance>
+                <functions>
+                    <func_GetEntryCount>TestTable_GetEntryCount</func_GetEntryCount>
+                    <func_GetEntry>TestTable_GetEntry</func_GetEntry>
+                    <func_IsUpdated>TestTable_IsUpdated</func_IsUpdated>
+                    <func_Synchronize>TestTable_Synchronize</func_Synchronize>
+                    <func_GetParamStringValue>TestTable_GetParamStringValue</func_GetParamStringValue>
+                    <func_SetParamStringValue>TestTable_SetParamStringValue</func_SetParamStringValue>
+                </functions>
+                <parameters>
+                    <parameter>
+                        <name>TableTestString</name>
+                        <type>string(256)</type>
+                        <syntax>string</syntax>
+                        <writable>true</writable>
+                    </parameter>
+                </parameters>
+            </object>                                                                       
+        </objects>
     </object>
  </objects>
 </dataModelInfo>

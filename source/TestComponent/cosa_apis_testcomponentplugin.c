@@ -18,6 +18,7 @@
 */
 
 #include "ansc_platform.h"
+#include "cosa_apis.h"
 #include "cosa_apis_testcomponentplugin.h"
 #include "ccsp_trace.h"
 #include "ccsp_syslog.h"
@@ -30,6 +31,7 @@ extern char g_Subsystem[32];//lnt
 
 static unsigned int TestSampleParamUlongValue = 1;
 static char TestSampleParam[64] = "Welcome To RDKB";
+static char MyString[10];
 /**********************************************************************  
 
     caller:     owner of this object 
@@ -78,6 +80,14 @@ TestComponent_GetParamStringValue
     )
 {
 
+	if( AnscEqualString(pParamName, "MyString", TRUE))
+	{
+		*pUlSize = strlen(MyString);
+
+		if (strcpy(pValue, MyString))
+			return TRUE;
+		return FALSE;
+	}
     return FALSE;
 }
 
@@ -246,7 +256,17 @@ TestComponent_SetParamStringValue
         char*                       pParamName,
         char*                       pString
     )
-{
+{	
+	if( AnscEqualString(pParamName, "MyString", TRUE))
+	{
+        if (!strcmp(pString, "error"))
+            return FALSE;
+
+		if (strcpy(MyString, pString))
+			return TRUE;
+		return FALSE;
+	}
+
 
     return FALSE;
 }
@@ -411,3 +431,151 @@ TestComponent_Commit
     return 0;
 }
 
+
+/***********************************************************************
+
+ APIs for Object:
+
+    X_RDKCENTRAL-COM_XDNS.TestTable.{i}.
+
+    *  TestTable_GetEntryCount
+    *  TestTable_GetEntry
+    *  TestTable_IsUpdated
+    *  TestTable_Synchronize
+    *  TestTable_AddEntry
+    *  TestTable_DelEntry
+    *  TestTable_GetParamStringValue
+    *  TestTable_SetParamStringValue
+    *  TestTable_Validate
+    *  TestTable_Commit
+    *  TestTable_Rollback
+
+***********************************************************************/
+
+typedef  struct
+_COSA_DML_TESTCOMPONENT_TEST_TABLE
+{
+    char TableTestString[256];
+}
+COSA_DML_TESTCOMPONENT_TEST_TABLE, *PCOSA_DML_TESTCOMPONENT_TEST_TABLE;
+
+/* Collection */
+typedef  struct
+_COSA_DML_TESTCOMPONENT
+{
+    UINT TestSampleParamUlong;
+    char *MyString; 
+    PCOSA_DML_TESTCOMPONENT_TEST_TABLE  Test_Tables;
+    UINT TestTableNumberOfEntries;
+}
+COSA_DML_TESTCOMPONENT, *PCOSA_DML_TESTCOMPONENT;
+
+COSA_DML_TESTCOMPONENT_TEST_TABLE table[120];
+
+ULONG
+TestTable_GetEntryCount
+    (
+        ANSC_HANDLE hInsContext
+    )
+
+{
+    PCOSA_CONTEXT_LINK_OBJECT       pLinkObj     = (PCOSA_CONTEXT_LINK_OBJECT)hInsContext;
+    PCOSA_DML_TESTCOMPONENT               p      = (PCOSA_DML_TESTCOMPONENT        )pLinkObj->hContext;
+       
+    return 120;
+}
+
+ANSC_HANDLE
+TestTable_GetEntry
+    (
+        ANSC_HANDLE                 hInsContext,
+        ULONG                       nIndex,
+        ULONG*                      pInsNumber
+    )
+{
+    *pInsNumber  = nIndex + 1; 
+    return table+nIndex;
+}
+
+BOOL
+TestTable_IsUpdated
+    (
+        ANSC_HANDLE                 hInsContext
+    )
+{
+    return TRUE;
+}
+
+ULONG
+TestTable_Synchronize
+    (
+        ANSC_HANDLE                 hInsContext
+    )
+{
+    PCOSA_CONTEXT_LINK_OBJECT       pLinkObj     = (PCOSA_CONTEXT_LINK_OBJECT     )hInsContext;
+    PCOSA_DML_TESTCOMPONENT         p            = (PCOSA_DML_TESTCOMPONENT       )pLinkObj->hContext;
+
+    /*release data allocated previous time*/
+    // if (p->TestTableNumberOfEntries)
+    // {
+    //     AnscFreeMemory(p->Test_Tables);
+    //     p->Test_Tables = NULL;
+    //     p->TestTableNumberOfEntries = 0;
+    // }
+    
+    // p->Test_Tables = table;
+    // p->TestTableNumberOfEntries = 120;
+
+    return ANSC_STATUS_SUCCESS;
+}
+
+ULONG
+TestTable_GetParamStringValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        char*                       pValue,
+        ULONG*                      pUlSize
+    )
+
+{
+    PCOSA_DML_TESTCOMPONENT_TEST_TABLE  p   = (PCOSA_DML_TESTCOMPONENT_TEST_TABLE)hInsContext;
+
+    if( AnscEqualString(ParamName, "TableTestString", TRUE))
+	{
+		*pUlSize = strlen(p->TableTestString);
+
+		if (strcpy(pValue, p->TableTestString))
+			return TRUE;
+		return FALSE;
+	}
+
+    /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
+    return FALSE;
+}
+
+
+BOOL
+TestTable_SetParamStringValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        char*                       strValue
+    )
+
+{
+    PCOSA_DML_TESTCOMPONENT_TEST_TABLE  p   = (PCOSA_DML_TESTCOMPONENT_TEST_TABLE)hInsContext;
+
+	if( AnscEqualString(ParamName, "TableTestString", TRUE))
+	{
+        if (!strcmp(strValue, "error"))
+            return FALSE;
+
+		if (strcpy(p->TableTestString, strValue))
+			return TRUE;
+		return FALSE;
+	}
+
+
+    return FALSE;
+}

@@ -134,4 +134,47 @@ TestComponent_Commit
         ANSC_HANDLE                 hInsContext
     );
 
+ULONG
+TestTable_GetEntryCount
+    (
+        ANSC_HANDLE hInsContext
+    );
+
+ANSC_HANDLE
+TestTable_GetEntry
+    (
+        ANSC_HANDLE                 hInsContext,
+        ULONG                       nIndex,
+        ULONG*                      pInsNumber
+    );
+
+BOOL
+TestTable_IsUpdated
+    (
+        ANSC_HANDLE                 hInsContext
+    );
+
+ULONG
+TestTable_Synchronize
+    (
+        ANSC_HANDLE                 hInsContext
+    );
+
+ULONG
+TestTable_GetParamStringValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        char*                       pValue,
+        ULONG*                      pUlSize
+    );
+
+BOOL
+TestTable_SetParamStringValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        char*                       strValue
+    );
+
 #endif
