@@ -32,6 +32,39 @@ extern char g_Subsystem[32];//lnt
 static unsigned int TestSampleParamUlongValue = 1;
 static char TestSampleParam[64] = "Welcome To RDKB";
 static char MyString[10];
+
+typedef  struct
+_COSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL
+{
+    BOOL Enable;
+    BOOL persist_tun;
+    BOOL persist_key;
+    BOOL tls_auth_enable;
+    int remote_port;
+    int remote_resolve_time;
+    char *device;
+    char *conn_type;
+    char *remote_addr_ipv4;
+    char *ca_path;
+    char *cert_path;
+    char *key_path;
+    char *ta_path;
+}
+COSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL, *PCOSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL;
+
+/* Collection */
+typedef  struct
+_COSA_DML_X_RDK_OPENVPN_CLIENT
+{
+    BOOL Enable;
+    PCOSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL  Tunnels;
+    UINT TunnelNumberOfEntries;
+}
+COSA_DML_X_RDK_OPENVPN_CLIENT, *PCOSA_DML_X_RDK_OPENVPN_CLIENT;
+
+COSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL table[120];
+COSA_DML_X_RDK_OPENVPN_CLIENT client;
+
 /**********************************************************************  
 
     caller:     owner of this object 
@@ -71,7 +104,7 @@ static char MyString[10];
 
 **********************************************************************/
 BOOL
-TestComponent_GetParamStringValue
+X_RDK_OpenVPNClient_GetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
@@ -80,14 +113,14 @@ TestComponent_GetParamStringValue
     )
 {
 
-	if( AnscEqualString(pParamName, "MyString", TRUE))
-	{
-		*pUlSize = strlen(MyString);
+	// if( AnscEqualString(pParamName, "MyString", TRUE))
+	// {
+	// 	*pUlSize = strlen(MyString);
 
-		if (strcpy(pValue, MyString))
-			return TRUE;
-		return FALSE;
-	}
+	// 	if (strcpy(pValue, MyString))
+	// 		return TRUE;
+	// 	return FALSE;
+	// }
     return FALSE;
 }
 
@@ -98,7 +131,7 @@ TestComponent_GetParamStringValue
     prototype: 
 
         BOOL
-        TestComponent_GetParamBoolValue
+        X_RDK_OpenVPNClient_GetParamBoolValue
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       pParamName,
@@ -122,13 +155,19 @@ TestComponent_GetParamStringValue
 
 **********************************************************************/
 BOOL
-TestComponent_GetParamBoolValue
+X_RDK_OpenVPNClient_GetParamBoolValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
         BOOL*                       pBool
     )
 {
+    if( AnscEqualString(pParamName, "Enable", TRUE))
+	{
+		*pBool =  client.Enable;
+		return TRUE;
+	}
+
     return FALSE;
 }
 
@@ -139,7 +178,7 @@ TestComponent_GetParamBoolValue
     prototype: 
 
         BOOL
-        TestComponent_GetParamUlongValue
+        X_RDK_OpenVPNClient_GetParamUlongValue
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       pParamName,
@@ -163,18 +202,18 @@ TestComponent_GetParamBoolValue
 
 **********************************************************************/
 BOOL
-TestComponent_GetParamUlongValue
+X_RDK_OpenVPNClient_GetParamUlongValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
         ULONG*                      puLong
     )
 {
-	if( AnscEqualString(pParamName, "TestSampleParamUlong", TRUE))
-	{
-		*puLong =  TestSampleParamUlongValue;
-		return TRUE;
-	}
+	// if( AnscEqualString(pParamName, "TestSampleParamUlong", TRUE))
+	// {
+	// 	*puLong =  TestSampleParamUlongValue;
+	// 	return TRUE;
+	// }
     return FALSE;
 }
 
@@ -185,7 +224,7 @@ TestComponent_GetParamUlongValue
     prototype: 
 
         BOOL
-        TestComponent_GetParamIntValue
+        X_RDK_OpenVPNClient_GetParamIntValue
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       pParamName,
@@ -209,7 +248,7 @@ TestComponent_GetParamUlongValue
 
 **********************************************************************/
 BOOL
-TestComponent_GetParamIntValue
+X_RDK_OpenVPNClient_GetParamIntValue
     (
          ANSC_HANDLE                 hInsContext,
         char*                        pParamName,
@@ -226,7 +265,7 @@ TestComponent_GetParamIntValue
     prototype: 
 
        BOOL
-       TestComponent_SetParamStringValue
+       X_RDK_OpenVPNClient_SetParamStringValue
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       pParamArray,
@@ -250,22 +289,22 @@ TestComponent_GetParamIntValue
 
 **********************************************************************/
 BOOL
-TestComponent_SetParamStringValue
+X_RDK_OpenVPNClient_SetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
         char*                       pString
     )
 {	
-	if( AnscEqualString(pParamName, "MyString", TRUE))
-	{
-        if (!strcmp(pString, "error"))
-            return FALSE;
+	// if( AnscEqualString(pParamName, "MyString", TRUE))
+	// {
+    //     if (!strcmp(pString, "error"))
+    //         return FALSE;
 
-		if (strcpy(MyString, pString))
-			return TRUE;
-		return FALSE;
-	}
+	// 	if (strcpy(MyString, pString))
+	// 		return TRUE;
+	// 	return FALSE;
+	// }
 
 
     return FALSE;
@@ -278,7 +317,7 @@ TestComponent_SetParamStringValue
     prototype: 
 
         BOOL
-        TestComponent_SetParamBoolValue
+        X_RDK_OpenVPNClient_SetParamBoolValue
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       pParamName,
@@ -302,13 +341,19 @@ TestComponent_SetParamStringValue
 
 **********************************************************************/
 BOOL
-TestComponent_SetParamBoolValue
+X_RDK_OpenVPNClient_SetParamBoolValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
         BOOL                        bValue
     )
 {
+    if (AnscEqualString(pParamName, "Enable", TRUE))
+    {
+		client.Enable = uValue;
+		return TRUE;
+    }
+
     return FALSE;
 }
 
@@ -319,7 +364,7 @@ TestComponent_SetParamBoolValue
     prototype: 
 
         BOOL
-        TestComponent_SetParamUlongValue
+        X_RDK_OpenVPNClient_SetParamUlongValue
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       pParamName,
@@ -343,18 +388,18 @@ TestComponent_SetParamBoolValue
 
 **********************************************************************/
 BOOL
-TestComponent_SetParamUlongValue
+X_RDK_OpenVPNClient_SetParamUlongValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
         ULONG                       uValue
     )
 {
-    if (AnscEqualString(pParamName, "TestSampleParamUlong", TRUE))
-    {
-		TestSampleParamUlongValue = uValue;
-		return TRUE;
-    }
+    // if (AnscEqualString(pParamName, "TestSampleParamUlong", TRUE))
+    // {
+	// 	TestSampleParamUlongValue = uValue;
+	// 	return TRUE;
+    // }
     return FALSE;
 }
 
@@ -365,7 +410,7 @@ TestComponent_SetParamUlongValue
     prototype: 
 
         BOOL
-        TestComponent_SetParamIntValue
+        X_RDK_OpenVPNClient_SetParamIntValue
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       pParamName,
@@ -389,7 +434,7 @@ TestComponent_SetParamUlongValue
 
 **********************************************************************/
 BOOL
-TestComponent_SetParamIntValue
+X_RDK_OpenVPNClient_SetParamIntValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
@@ -406,7 +451,7 @@ TestComponent_SetParamIntValue
     prototype: 
 
        ULONG
-       TestComponent_Commit
+       X_RDK_OpenVPNClient_Commit
             (
                 ANSC_HANDLE                 hInsContext
             );
@@ -422,7 +467,7 @@ TestComponent_SetParamIntValue
 
 **********************************************************************/
 ULONG
-TestComponent_Commit
+X_RDK_OpenVPNClient_Commit
     (
         ANSC_HANDLE                 hInsContext
     )
@@ -452,41 +497,21 @@ TestComponent_Commit
 
 ***********************************************************************/
 
-typedef  struct
-_COSA_DML_TESTCOMPONENT_TEST_TABLE
-{
-    char TableTestString[256];
-}
-COSA_DML_TESTCOMPONENT_TEST_TABLE, *PCOSA_DML_TESTCOMPONENT_TEST_TABLE;
-
-/* Collection */
-typedef  struct
-_COSA_DML_TESTCOMPONENT
-{
-    UINT TestSampleParamUlong;
-    char *MyString; 
-    PCOSA_DML_TESTCOMPONENT_TEST_TABLE  Test_Tables;
-    UINT TestTableNumberOfEntries;
-}
-COSA_DML_TESTCOMPONENT, *PCOSA_DML_TESTCOMPONENT;
-
-COSA_DML_TESTCOMPONENT_TEST_TABLE table[120];
-
 ULONG
-TestTable_GetEntryCount
+Tunnel_GetEntryCount
     (
         ANSC_HANDLE hInsContext
     )
 
 {
     PCOSA_CONTEXT_LINK_OBJECT       pLinkObj     = (PCOSA_CONTEXT_LINK_OBJECT)hInsContext;
-    PCOSA_DML_TESTCOMPONENT               p      = (PCOSA_DML_TESTCOMPONENT        )pLinkObj->hContext;
+    PCOSA_DML_X_RDK_OPENVPN_CLIENT               p      = (PCOSA_DML_X_RDK_OPENVPN_CLIENT        )pLinkObj->hContext;
        
     return 120;
 }
 
 ANSC_HANDLE
-TestTable_GetEntry
+Tunnel_GetEntry
     (
         ANSC_HANDLE                 hInsContext,
         ULONG                       nIndex,
@@ -498,7 +523,7 @@ TestTable_GetEntry
 }
 
 BOOL
-TestTable_IsUpdated
+Tunnel_IsUpdated
     (
         ANSC_HANDLE                 hInsContext
     )
@@ -507,13 +532,13 @@ TestTable_IsUpdated
 }
 
 ULONG
-TestTable_Synchronize
+Tunnel_Synchronize
     (
         ANSC_HANDLE                 hInsContext
     )
 {
     PCOSA_CONTEXT_LINK_OBJECT       pLinkObj     = (PCOSA_CONTEXT_LINK_OBJECT     )hInsContext;
-    PCOSA_DML_TESTCOMPONENT         p            = (PCOSA_DML_TESTCOMPONENT       )pLinkObj->hContext;
+    PCOSA_DML_X_RDK_OPENVPN_CLIENT         p            = (PCOSA_DML_X_RDK_OPENVPN_CLIENT       )pLinkObj->hContext;
 
     /*release data allocated previous time*/
     // if (p->TestTableNumberOfEntries)
@@ -530,7 +555,7 @@ TestTable_Synchronize
 }
 
 ULONG
-TestTable_GetParamStringValue
+Tunnel_GetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       ParamName,
@@ -539,7 +564,7 @@ TestTable_GetParamStringValue
     )
 
 {
-    PCOSA_DML_TESTCOMPONENT_TEST_TABLE  p   = (PCOSA_DML_TESTCOMPONENT_TEST_TABLE)hInsContext;
+    PCOSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL  p   = (PCOSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL)hInsContext;
 
     if( AnscEqualString(ParamName, "TableTestString", TRUE))
 	{
@@ -556,7 +581,7 @@ TestTable_GetParamStringValue
 
 
 BOOL
-TestTable_SetParamStringValue
+Tunnel_SetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       ParamName,
@@ -564,7 +589,7 @@ TestTable_SetParamStringValue
     )
 
 {
-    PCOSA_DML_TESTCOMPONENT_TEST_TABLE  p   = (PCOSA_DML_TESTCOMPONENT_TEST_TABLE)hInsContext;
+    PCOSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL  p   = (PCOSA_DML_X_RDK_OPENVPN_CLIENT_TUNNEL)hInsContext;
 
 	if( AnscEqualString(ParamName, "TableTestString", TRUE))
 	{

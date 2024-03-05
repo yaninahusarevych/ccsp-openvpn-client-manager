@@ -64,7 +64,7 @@
 
 ***********************************************************************/
 BOOL
-TestComponent_GetParamStringValue
+X_RDK_OpenVPNClient_GetParamStringValue
 	(
 		ANSC_HANDLE 				hInsContext,
 		char*						pParamName,
@@ -73,7 +73,7 @@ TestComponent_GetParamStringValue
 	);
 
 BOOL
-TestComponent_GetParamBoolValue
+X_RDK_OpenVPNClient_GetParamBoolValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       ParamName,
@@ -81,7 +81,7 @@ TestComponent_GetParamBoolValue
     );
 
 BOOL
-TestComponent_GetParamUlongValue
+X_RDK_OpenVPNClient_GetParamUlongValue
     (
  	ANSC_HANDLE                 	hInsContext,
         char*                       pParamName,
@@ -89,7 +89,7 @@ TestComponent_GetParamUlongValue
     );
 
 BOOL
-TestComponent_GetParamIntValue
+X_RDK_OpenVPNClient_GetParamIntValue
 	(
 		 ANSC_HANDLE				 hInsContext,
 		char*						 pParamName,
@@ -97,7 +97,7 @@ TestComponent_GetParamIntValue
 	);
 
 BOOL
-TestComponent_SetParamStringValue
+X_RDK_OpenVPNClient_SetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
@@ -105,7 +105,7 @@ TestComponent_SetParamStringValue
     );
 
 BOOL
-TestComponent_SetParamBoolValue
+X_RDK_OpenVPNClient_SetParamBoolValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
@@ -113,7 +113,7 @@ TestComponent_SetParamBoolValue
     );
 
 BOOL
-TestComponent_SetParamUlongValue
+X_RDK_OpenVPNClient_SetParamUlongValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
@@ -121,7 +121,7 @@ TestComponent_SetParamUlongValue
     );
 
 BOOL
-TestComponent_SetParamIntValue
+X_RDK_OpenVPNClient_SetParamIntValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
@@ -129,19 +129,19 @@ TestComponent_SetParamIntValue
     );
 
 ULONG
-TestComponent_Commit
+X_RDK_OpenVPNClient_Commit
     (
         ANSC_HANDLE                 hInsContext
     );
 
 ULONG
-TestTable_GetEntryCount
+Tunnel_GetEntryCount
     (
         ANSC_HANDLE hInsContext
     );
 
 ANSC_HANDLE
-TestTable_GetEntry
+Tunnel_GetEntry
     (
         ANSC_HANDLE                 hInsContext,
         ULONG                       nIndex,
@@ -149,19 +149,19 @@ TestTable_GetEntry
     );
 
 BOOL
-TestTable_IsUpdated
+Tunnel_IsUpdated
     (
         ANSC_HANDLE                 hInsContext
     );
 
 ULONG
-TestTable_Synchronize
+Tunnel_Synchronize
     (
         ANSC_HANDLE                 hInsContext
     );
 
 ULONG
-TestTable_GetParamStringValue
+Tunnel_GetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       ParamName,
@@ -170,7 +170,7 @@ TestTable_GetParamStringValue
     );
 
 BOOL
-TestTable_SetParamStringValue
+Tunnel_SetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       ParamName,

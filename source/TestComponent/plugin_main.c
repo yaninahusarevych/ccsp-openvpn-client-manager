@@ -61,21 +61,21 @@ COSA_Init
     
     pPlugInfo->uPluginVersion       = THIS_PLUGIN_VERSION;
     /* register the back-end apis for the data model */
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_GetParamUlongValue",  TestComponent_GetParamUlongValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_SetParamUlongValue",  TestComponent_SetParamUlongValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_GetParamStringValue",  TestComponent_GetParamStringValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_SetParamStringValue",  TestComponent_SetParamStringValue);
-	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_GetParamBoolValue",  TestComponent_GetParamBoolValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_SetParamBoolValue",  TestComponent_SetParamBoolValue);
-	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_GetParamIntValue",  TestComponent_GetParamIntValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_SetParamIntValue",  TestComponent_SetParamIntValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestComponent_Commit",  TestComponent_Commit);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_GetEntryCount",  TestTable_GetEntryCount);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_GetEntry",  TestTable_GetEntry);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_IsUpdated",  TestTable_IsUpdated);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_Synchronize",  TestTable_Synchronize);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_GetParamStringValue",  TestTable_GetParamStringValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "TestTable_SetParamStringValue",  TestTable_SetParamStringValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamUlongValue",  X_RDK_OpenVPNClient_GetParamUlongValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamUlongValue",  X_RDK_OpenVPNClient_SetParamUlongValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamStringValue",  X_RDK_OpenVPNClient_GetParamStringValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamStringValue",  X_RDK_OpenVPNClient_SetParamStringValue);
+	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamBoolValue",  X_RDK_OpenVPNClient_GetParamBoolValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamBoolValue",  X_RDK_OpenVPNClient_SetParamBoolValue);
+	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamIntValue",  X_RDK_OpenVPNClient_GetParamIntValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamIntValue",  X_RDK_OpenVPNClient_SetParamIntValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_Commit",  X_RDK_OpenVPNClient_Commit);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetEntryCount",  Tunnel_GetEntryCount);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetEntry",  Tunnel_GetEntry);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_IsUpdated",  Tunnel_IsUpdated);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_Synchronize",  Tunnel_Synchronize);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetParamStringValue",  Tunnel_GetParamStringValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_SetParamStringValue",  Tunnel_SetParamStringValue);
     return  0;
 }
 
