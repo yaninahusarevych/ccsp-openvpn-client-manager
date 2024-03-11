@@ -1,1 +1,1 @@
-SUBDIRS = TestComponent
+SUBDIRS = core dml utils
