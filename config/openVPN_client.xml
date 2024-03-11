@@ -5,6 +5,9 @@
     <moduleName>X_RDK_OpenVPNClient</moduleName>
     <author></author>
     <description>Open VPN extenstion</description>
+    <library>
+        <func_Init>COSA_Init</func_Init>
+    </library>
     <objects>
         <object>
             <name>X_RDK_OpenVPNClient</name>
@@ -24,8 +27,8 @@
             <objects>
                 <object>
                     <name>Tunnel</name>
-                    <objectType>dynamicTable</objectType>
-                    <maxInstance>128</maxInstance>
+                    <objectType>staticTable</objectType>
+                    <maxInstance>5</maxInstance>
                     <functions>
                         <func_GetEntryCount>Tunnel_GetEntryCount</func_GetEntryCount>
                         <func_GetEntry>Tunnel_GetEntry</func_GetEntry>
@@ -146,6 +149,12 @@
                             <name>IFConfigRemoteEndpoint</name>
                             <type>string</type>
                             <syntax>string</syntax>
+                            <writable>true</writable>
+                        </parameter>
+                        <parameter>
+                            <name>ApplySettings</name>
+                            <type>boolean</type>
+                            <syntax>bool</type>
                             <writable>true</writable>
                         </parameter>
                     </parameters>
