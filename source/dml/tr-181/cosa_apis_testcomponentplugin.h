@@ -170,6 +170,22 @@ Tunnel_GetParamStringValue
     );
 
 BOOL
+Tunnel_GetParamIntValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        int*                        pInt
+    );
+
+BOOL
+Tunnel_GetParamBoolValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        BOOL*                       pBool
+    );
+
+BOOL
 Tunnel_SetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
@@ -177,4 +193,19 @@ Tunnel_SetParamStringValue
         char*                       strValue
     );
 
+BOOL
+Tunnel_SetParamBoolValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        BOOL                        bValue
+    );
+
+BOOL
+Tunnel_SetParamIntValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        int*                        pIntValue
+    );
 #endif
