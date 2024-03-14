@@ -1,38 +1,44 @@
 #include "ansc_platform.h"
-//#include "cosa_apis_testcomponentplugin.h"
 #include "ccsp_trace.h"
 #include "ccsp_syslog.h"
+#include <stdint.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#include "ccsp_psm_helper.h"
+
+extern ANSC_HANDLE bus_handle;
+extern char g_Subsystem[32];
 
 struct OpenVPNCLientData_t {
     BOOL enable;
 };
 
 struct Tunnel_t {
+    BOOL enable;
     BOOL persist_tun;
     BOOL persist_key;
     BOOL tls_auth_enable;
     int remote_port;
     int remote_resolve_time;
-    char *device;
-    char *conn_type;
-    char *remote_addr_ipv4;
-    char *ca_path;
-    char *cert_path;
-    char *key_path;
-    char *ta_path;
+    char device[256];
+    char conn_type[256];
+    char remote_addr_ipv4[256];
+    char ca_path[256];
+    char cert_path[256];
+    char key_pub_path[256];
+    char key_priv_path[256];
+    char ta_path[256];
+    int user;
+    int group;
+    char if_local_ep[256];
+    char if_remote_ep[256];
 };
 
 OpenVPNCLientData_t client;
 
-// Must be a dynamic array
-Tunnel_t tunnels;
-
-
-//Tunnel_t *clients;
-//int count = 0;
+Tunnel_t tunnels[5];
 
 ULONG
 Tunnel_GetEntryCount
@@ -81,11 +87,6 @@ OpenVPNClient_SetParamBoolValue
 {
     if (AnscEqualString(ParamName, "OpenVPNClientEnabled", TRUE))
     {
-        if(client->enable == bValue)
-        {
-            return TRUE;
-        }
-
         client->enable = bValue;
 
         return TRUE;
@@ -102,21 +103,30 @@ Tunnel_GetParamBoolValue
         BOOL*                       pBool
     )
 {
+    PCOSA_CONTEXT_LINK_OBJECT pTunnel_ctx = (PCOSA_CONTEXT_LINK_OBJECT)hInsContext;
+    int index = pTunnel_ctx->InstanceNumber;
+    
+    if (AnscEqualString(ParamName, "Enable", TRUE))
+    {
+        *pBool = tunnels[index].enable;
+        return TRUE;
+    }
+
     if (AnscEqualString(ParamName, "PersistTUN", TRUE))
     {
-        *pBool = tunnels->persist_tun;
+        *pBool = tunnels[index].persist_tun;
         return TRUE;
     }
 
     if (AnscEqualString(ParamName, "PersistKey", TRUE))
     {
-        *pBool = tunnels->persist_key;
+        *pBool = tunnels[index].persist_key;
         return TRUE;
     }
  
     if (AnscEqualString(ParamName, "TLS-AuthEnabled", TRUE))
     {
-        *pBool = tunnels->tls_auth_enable;
+        *pBool = tunnels[index].tls_auth_enable;
         return TRUE;
     }
 
@@ -131,18 +141,33 @@ Tunnel_GetParamIntValue
         int*                        pInt
     )
 {
+    PCOSA_CONTEXT_LINK_OBJECT pTunnel_ctx = (PCOSA_CONTEXT_LINK_OBJECT)hInsContext;
+    int index = pTunnel_ctx->InstanceNumber;
+
     if (AnscEqualString(ParamName, "RemotePort", TRUE))
     {
-        *pInt = tunnels->remote_port;
+        *pInt = tunnels[index].remote_port;
         return TRUE;
     }
 
     if (AnscEqualString(ParamName, "RemoteResolveTime", TRUE))
     {
-        *pInt = tunnels->remote_resolve_time;
+        *pInt = tunnels[index].remote_resolve_time;
         return TRUE;
     }
 
+    if (AnscEqualString(ParamName, "Group", TRUE))
+    {
+        *pInt = tunnels[index].group;
+        return TRUE;
+    }
+    
+    if (AnscEqualString(ParamName, "User", TRUE))
+    {
+        *pInt = tunnels[index].user;
+        return TRUE;
+    }
+    
     return FALSE;
 }
 
@@ -155,48 +180,63 @@ Tunnel_GetParamStringValue
         ULONG*                      pUlSize
     )
 {
+    PCOSA_CONTEXT_LINK_OBJECT pTunnel_ctx = (PCOSA_CONTEXT_LINK_OBJECT)hInsContext;
+    int index = pTunnel_ctx->InstanceNumber;
+    
     if( AnscEqualString(ParamName, "Device", TRUE))
     {
-        snprintf(pValue,*pUlSize,"%s",tunnels->device);
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].device);
         return 0;
     }
 
     if( AnscEqualString(ParamName, "ConnectionType", TRUE))
     {
-        snprintf(pValue,*pUlSize,"%s",tunnels->conn_type);
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].conn_type);
         return 0;
     }
 
     if( AnscEqualString(ParamName, "RemoteAddressIPv4", TRUE))
     {
-        snprintf(pValue,*pUlSize,"%s",tunnels->remote_addr_ipv4);
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].remote_addr_ipv4);
         return 0;
     }
 
     if( AnscEqualString(ParamName, "CertificateAuthority", TRUE))
     {
-        snprintf(pValue,*pUlSize,"%s",tunnels->ca_path);
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].ca_path);
         return 0;
     }
 
     if( AnscEqualString(ParamName, "PublicKey", TRUE))
     {
-        snprintf(pValue,*pUlSize,"%s",tunnels->cert_path);
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].cert_path);
         return 0;
     }
 
     if( AnscEqualString(ParamName, "PrivateKey", TRUE))
     {
-        snprintf(pValue,*pUlSize,"%s",tunnels->key_path);
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].key_path);
         return 0;
     }
 
-    if( AnscEqualString(ParamName, "TAKey", TRUE))
+    if( AnscEqualString(ParamName, "TAKey", TRUE)
     {
-        snprintf(pValue,*pUlSize,"%s",tunnels->ta_path);
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].ta_path);
+        return 0;
+    }
+    
+    if( AnscEqualString(ParamName, "IFConfigLocalEndpoint", TRUE)
+    {
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].if_local_ep);
         return 0;
     }
 
+    if( AnscEqualString(ParamName, "IFConfigRemoteEndpoint", TRUE)
+    {
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].if_remote_ep);
+        return 0;
+    }
+    
     return 0;
 }
 
@@ -208,41 +248,206 @@ Tunnel_SetParamBoolValue
         BOOL                        bValue
     )
 {
-    if (AnscEqualString(ParamName, "PersistTUN", TRUE))
-    {
-        if(tunnels.persist_tun == bValue)
-        {
-            return TRUE;
-        }
+    PCOSA_CONTEXT_LINK_OBJECT pTunnel_ctx = (PCOSA_CONTEXT_LINK_OBJECT)hInsContext;
+    int index = pTunnel_ctx->InstanceNumber;
+    
+    char psmPath[512];
+    char strValue[16];
+    snprintf(psmPath, 512, "eRT.X_RDK_OpenVPNClient.Tunnel.%d.%s", index, ParamName);
+    snprintf(strValue, 16, (bValue) ? "TRUE" : "FALSE");
 
-        tunnels.persist_tun = bValue;
+	if( AnscEqualString(ParamName, "Enable", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
 
-        return TRUE;
-    }
+        tunnels[index].enable = bValue;
+		return FALSE;
+	}
+	
+    if( AnscEqualString(ParamName, "PersistTUN", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
 
-    if (AnscEqualString(ParamName, "PersistKey", TRUE))
-    {
-        if(global_wifi_config->global_parameters.persist_key == bValue)
-        {
-            return TRUE;
-        }
+        tunnels[index].persist_tun = bValue;
+		return FALSE;
+	}
 
-        tunnels.persist_key = bValue;
+	if( AnscEqualString(ParamName, "PersistKey", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
 
-        return TRUE;
-    }
+        tunnels[index].persist_key = bValue;
+		return FALSE;
+	}
 
-    if (AnscEqualString(ParamName, "TLS-AuthEnabled", TRUE))
-    {
-        if(global_wifi_config->global_parameters.tls_auth_enable == bValue)
-        {
-            return TRUE;
-        }
+	if( AnscEqualString(ParamName, "TLS-AuthEnabled", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
 
-        tunnels.tls_auth_enable = bValue;
-
-        return TRUE;
-    }
+        tunnels[index].tls_auth_enable = bValue;
+		return FALSE;
+	}
 
     return FALSE;
 }
+
+BOOL
+Tunnel_SetParamStringValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        char*                       strValue
+    )
+
+{
+    PCOSA_CONTEXT_LINK_OBJECT pTunnel_ctx = (PCOSA_CONTEXT_LINK_OBJECT)hInsContext;
+    int index = pTunnel_ctx->InstanceNumber;
+    
+    char psmPath[512];
+    snprintf(psmPath, 512, "eRT.X_RDK_OpenVPNClient.Tunnel.%d.%s", index, ParamName);
+
+    if (!strcmp(strValue, "error"))
+        return FALSE;
+
+	if( AnscEqualString(ParamName, "Device", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].device, strValue))
+			return TRUE;
+		return FALSE;
+	}
+
+	if( AnscEqualString(ParamName, "ConnectionType", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].conn_type, strValue))
+			return TRUE;
+		return FALSE;
+	}
+
+	if( AnscEqualString(ParamName, "RemoteAddressIPv4", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].remote_addr_ipv4, strValue))
+			return TRUE;
+		return FALSE;
+	}
+
+	if( AnscEqualString(ParamName, "CertificateAuthority", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].ca_path, strValue))
+			return TRUE;
+		return FALSE;
+	}
+	
+    if( AnscEqualString(ParamName, "PublicKey", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].key_pub_path, strValue))
+			return TRUE;
+		return FALSE;
+	}
+
+    if( AnscEqualString(ParamName, "PrivateKey", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].key_priv_path, strValue))
+			return TRUE;
+		return FALSE;
+	}
+
+    if( AnscEqualString(ParamName, "TAKey", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].ta_path, strValue))
+			return TRUE;
+		return FALSE;
+	}
+    
+    if( AnscEqualString(ParamName, "IFConfigLocalEndpoint", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].if_local_ep, strValue))
+			return TRUE;
+		return FALSE;
+	}
+
+    if( AnscEqualString(ParamName, "IFConfigRemoteEndpoint", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		if (strcpy(tunnels[index].if_remote_ep, strValue))
+			return TRUE;
+		return FALSE;
+	}
+    
+    return FALSE;
+}
+
+BOOL
+Tunnel_SetParamIntValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        int*                        pIntValue
+    )
+{
+    PCOSA_CONTEXT_LINK_OBJECT pTunnel_ctx = (PCOSA_CONTEXT_LINK_OBJECT)hInsContext;
+    int index = pTunnel_ctx->InstanceNumber;
+    
+    char psmPath[512];
+    char strValue[16];
+    snprintf(psmPath, 512, "eRT.X_RDK_OpenVPNClient.Tunnel.%d.%s", index, ParamName);
+    snprintf(strValue, 16, "%d", *pIntValue);
+
+    if (!strcmp(strValue, "error"))
+        return FALSE;
+
+	if( AnscEqualString(ParamName, "RemotePort", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		tunnels[index].remote_port = *pIntValue;
+		return FALSE;
+	}
+
+	if( AnscEqualString(ParamName, "RemoteResolveTime", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		tunnels[index].remote_resolve_time = *pIntValue;
+		return FALSE;
+	}
+	
+    if( AnscEqualString(ParamName, "User", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		tunnels[index].user= *pIntValue;
+		return FALSE;
+	}
+    
+    if( AnscEqualString(ParamName, "Group", TRUE))
+	{
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CSSP_SUCCESS) 
+            return FALSE;
+		tunnels[index].group= *pIntValue;
+		return FALSE;
+	}
+
+    return FALSE;
+}
+
