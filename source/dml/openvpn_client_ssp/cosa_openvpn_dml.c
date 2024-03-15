@@ -104,7 +104,7 @@ OpenVPNClient_GetParamBoolValue
 {
     if (AnscEqualString(ParamName, "OpenVPNClientEnabled", TRUE))
     {
-        *pBool = client->enable;
+        *pBool = client.enable;
         return TRUE;
     }
 
@@ -121,7 +121,7 @@ OpenVPNClient_SetParamBoolValue
 {
     if (AnscEqualString(ParamName, "OpenVPNClientEnabled", TRUE))
     {
-        client->enable = bValue;
+        client.enable = bValue;
 
         return TRUE;
     }
