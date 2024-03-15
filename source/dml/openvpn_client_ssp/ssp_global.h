@@ -40,14 +40,13 @@
 #include "ansc_platform.h"
 #include "slap_definitions.h"
 
-#ifndef WIN32
 #include "ccsp_message_bus.h"
-#endif
-
 #include "ccsp_base_api.h"
 
 #include "dslh_cpeco_interface.h"
 #include "dslh_cpeco_exported_api.h"
+
+#include "ccsp_component_helper.h"
 
 #include "slap_vco_exported_api.h"
 #include "ssp_messagebus_interface.h"
