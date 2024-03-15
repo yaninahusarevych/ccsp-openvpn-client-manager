@@ -45,11 +45,11 @@
 extern ANSC_HANDLE bus_handle;
 extern char g_Subsystem[32];
 
-struct OpenVPNCLientData_t {
+typedef struct {
     BOOL enable;
-};
+} OpenVPNCLientData_t;
 
-struct Tunnel_t {
+typedef struct {
     BOOL enable;
     BOOL persist_tun;
     BOOL persist_key;
@@ -68,7 +68,7 @@ struct Tunnel_t {
     int group;
     char if_local_ep[256];
     char if_remote_ep[256];
-};
+} Tunnel_t;
 
 OpenVPNCLientData_t client;
 
