@@ -26,7 +26,7 @@ Type=forking
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
-WorkingDirectory=/usr/ccsp/ccsp-openvpn-client-manager
+WorkingDirectory=/usr/ccsp/openvpnmgr
 #ExecStartPre=/bin/sh -c "sleep 30"
 ExecStart=/usr/bin/CcspOpenVPNClientMgr -subsys $Subsys
 ExecStop=/usr/bin/killall -9 CcspOpenVPNClientMgr
