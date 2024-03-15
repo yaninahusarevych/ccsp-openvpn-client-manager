@@ -17,17 +17,15 @@
 # limitations under the License.
 ##########################################################################
 
-bin_PROGRAMS = test_component
+bin_PROGRAMS = openvpn_client_ssp
 
-AM_CPPFLAGS = -I$(top_srcdir)/hal/include \
-		-I$(top_srcdir)/source/TestComponent \
-		-I=${includedir} \
+AM_CPPFLAGS = -I=${includedir} \
 		-I=${includedir}/ccsp
 
 AM_CFLAGS = -D_ANSC_LINUX -D_ANSC_USER -D_ANSC_LITTLE_ENDIAN_ $(DBUS_CFLAGS)
 
 AM_LDFLAGS = -lccsp_common $(DBUS_LIBS)
 
-test_component_SOURCES = cosa_apis_testcomponentplugin.c plugin_main.c ssp_action.c ssp_messagebus_interface.c ssp_main.c
+openvpn_client_ssp_SOURCES = cosa_openvpn_dml.c plugin_main.c ssp_action.c ssp_main.c ssp_messagebus_interface.c
 
 
