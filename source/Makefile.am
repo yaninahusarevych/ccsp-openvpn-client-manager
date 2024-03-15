@@ -1,1 +1,1 @@
-SUBDIRS = core dml openvpn_runner
+SUBDIRS = dml openvpn_runner
