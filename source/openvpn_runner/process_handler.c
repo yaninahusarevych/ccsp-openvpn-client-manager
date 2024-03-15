@@ -50,7 +50,7 @@ int terminate_process(pid_t pid)
 int execute_process(const char *path, char *const args[], pid_t *child)
 {
     int pipefd[2];
-    int child_exec_error = 0, ret = 0, wirite_end_flags = 0;
+    int child_exec_error = 0, ret = 0, write_end_flags = 0;
 
     if (pipe(pipefd)) 
     {
@@ -58,14 +58,14 @@ int execute_process(const char *path, char *const args[], pid_t *child)
         return EX_OSERR;
     }
 
-    if ((wirite_end_flags = fcntl(pipefd[PIPE_WRITE_END], F_GETFD)) == -1)
+    if ((write_end_flags = fcntl(pipefd[PIPE_WRITE_END], F_GETFD)) == -1)
     {
         perror("fcntl() failed");
         ret = EX_OSERR;
         goto syserror;
     }
 
-    if (fcntl(pipefd[PIPE_WRITE_END], F_SETFD, wirite_end_flags | FD_CLOEXEC) == -1) 
+    if (fcntl(pipefd[PIPE_WRITE_END], F_SETFD, write_end_flags | FD_CLOEXEC) == -1) 
     {
         perror("fcntl() failed");
         ret = EX_OSERR;
