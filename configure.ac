@@ -2,16 +2,14 @@ dnl                                               -*- Autoconf -*-
 dnl Process this file with autoconf to produce a configure script.
 
 dnl AC_PREREQ([2.69])
-AC_INIT(TestComponent-rdkb, version-1.0)
-AC_CONFIG_SRCDIR([cfg])
-AM_CONFIG_HEADER(cfg/config.h)
-AC_CONFIG_MACRO_DIR([cfg])
-AC_CONFIG_AUX_DIR([cfg])
+AC_INIT(ccsp-openvpn-client-manager, version-1.0)
+AC_CONFIG_SRCDIR([config])
+AC_CONFIG_MACRO_DIR([config])
+AC_CONFIG_AUX_DIR([config])
 AM_INIT_AUTOMAKE([foreign no-dist-gzip dist-bzip2 1.9])
 LT_INIT
 
 dnl subdirectories.
-SUBDIRS=""
 
 dnl Checks for programs.
 AC_PROG_CXX
@@ -49,5 +47,6 @@ PKG_CHECK_MODULES([DBUS],[dbus-1 >= 1.6.18])
 
 AC_CONFIG_FILES([Makefile
 		source/Makefile
-		source/TestComponent/Makefile])
+		source/dml/Makefile
+        source/openvpn_runner/Makefile])
 AC_OUTPUT
