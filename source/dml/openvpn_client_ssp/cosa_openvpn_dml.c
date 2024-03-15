@@ -39,7 +39,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-
+#include "cosa_apis.h"
 #include "ccsp_psm_helper.h"
 
 extern ANSC_HANDLE bus_handle;
