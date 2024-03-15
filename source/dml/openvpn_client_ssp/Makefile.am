@@ -19,14 +19,15 @@
 
 bin_PROGRAMS = CcspOpenVPNClientMgr
 
-AM_CPPFLAGS = -I=${includedir} \
+CcspOpenVPNClientMgr_CPPFLAGS = -I/var/tmp/pc-rdkb/include/dbus-1.0 -I$(top_srcdir)/../CcspCommonLibrary/source/ccsp/custom -I$(top_srcdir)/../CcspCommonLibrary/source/ccsp/include -I$(top_srcdir)/../CcspCommonLibrary/source/debug_api/include -I$(top_srcdir)/../CcspCommonLibrary/source/cosa/include -I$(top_srcdir)/../CcspCommonLibrary/source/cosa/include/linux -I$(top_srcdir)/../CcspCommonLibrary/source/ccsp/components/include -I$(top_srcdir)/../CcspCommonLibrary/source/cosa/package/slap/include  -I$(top_srcdir)/../CcspCommonLibrary/source/util_api/ansc/include -I$(top_srcdir)/../CcspCommonLibrary/source/ccsp/components/common/MessageBusHelper/include 
+
+
+CcspOpenVPNClientMgr_CPPFLAGS += -I=${includedir} \
 		-I=${includedir}/ccsp
 
-AM_CFLAGS = -D_ANSC_LINUX -D_ANSC_USER -D_ANSC_LITTLE_ENDIAN_ $(DBUS_CFLAGS)
+CcspOpenVPNClientMgr_CFLAGS = -D_ANSC_LINUX -D_ANSC_USER -D_ANSC_LITTLE_ENDIAN_ $(DBUS_CFLAGS)
 
-AM_LDFLAGS = -lccsp_common $(DBUS_LIBS)
-
-CcspOpenVPNClientMgr_LDFLAGS = -rdynamic
+CcspOpenVPNClientMgr_LDFLAGS = -rdynamic -lccsp_common $(DBUS_LIBS)
 
 CcspOpenVPNClientMgr_SOURCES = cosa_openvpn_dml.c plugin_main.c ssp_action.c ssp_main.c ssp_messagebus_interface.c dm_pack_datamodel.c
 
