@@ -40,6 +40,7 @@
 #include "ansc_load_library.h"
 #include "cosa_plugin_api.h"
 #include "plugin_main.h"
+#include "cosa_logging_internal.h"
 #include "cosa_apis_testcomponentplugin.h"
 
 #define THIS_PLUGIN_VERSION                         1
