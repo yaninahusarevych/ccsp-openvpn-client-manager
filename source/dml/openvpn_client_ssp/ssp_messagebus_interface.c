@@ -40,7 +40,7 @@
 
 
 ANSC_HANDLE                 bus_handle               = NULL;
-char                 g_Subsystem[32];
+extern char                 g_Subsystem[32];
 ANSC_HANDLE          g_MessageBusHandle_Irep; 
 char                 g_SubSysPrefix_Irep[32];
 
