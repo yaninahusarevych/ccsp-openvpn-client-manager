@@ -63,75 +63,22 @@
     *  PluginSampleObj_Rollback
 
 ***********************************************************************/
-BOOL
-X_RDK_OpenVPNClient_GetParamStringValue
-	(
-		ANSC_HANDLE 				hInsContext,
-		char*						pParamName,
-		char*						pValue,
-		ULONG*						pUlSize
-	);
 
 BOOL
-X_RDK_OpenVPNClient_GetParamBoolValue
+OpenVPNClient_GetParamBoolValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       ParamName,
         BOOL*                       pBool
     );
 
-BOOL
-X_RDK_OpenVPNClient_GetParamUlongValue
-    (
- 	ANSC_HANDLE                 	hInsContext,
-        char*                       pParamName,
-        ULONG*                      puLong
-    );
 
 BOOL
-X_RDK_OpenVPNClient_GetParamIntValue
-	(
-		 ANSC_HANDLE				 hInsContext,
-		char*						 pParamName,
-		int*						 pInt
-	);
-
-BOOL
-X_RDK_OpenVPNClient_SetParamStringValue
-    (
-        ANSC_HANDLE                 hInsContext,
-        char*                       pParamName,
-        char*                       pString
-    );
-
-BOOL
-X_RDK_OpenVPNClient_SetParamBoolValue
+OpenVPNClient_SetParamBoolValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       pParamName,
         BOOL                        bValue
-    );
-
-BOOL
-X_RDK_OpenVPNClient_SetParamUlongValue
-    (
-        ANSC_HANDLE                 hInsContext,
-        char*                       pParamName,
-       ULONG                      	uValue
-    );
-
-BOOL
-X_RDK_OpenVPNClient_SetParamIntValue
-    (
-        ANSC_HANDLE                 hInsContext,
-        char*                       pParamName,
-        int                      	iValue
-    );
-
-ULONG
-X_RDK_OpenVPNClient_Commit
-    (
-        ANSC_HANDLE                 hInsContext
     );
 
 ULONG
@@ -148,17 +95,6 @@ Tunnel_GetEntry
         ULONG*                      pInsNumber
     );
 
-BOOL
-Tunnel_IsUpdated
-    (
-        ANSC_HANDLE                 hInsContext
-    );
-
-ULONG
-Tunnel_Synchronize
-    (
-        ANSC_HANDLE                 hInsContext
-    );
 
 ULONG
 Tunnel_GetParamStringValue

@@ -40,7 +40,7 @@
 #include "ansc_load_library.h"
 #include "cosa_plugin_api.h"
 #include "plugin_main.h"
-#include "cosa_apis_testcomponentplugin.h"
+#include "cosa_apis_openvpn.h"
 
 #define THIS_PLUGIN_VERSION                         1
 
@@ -109,17 +109,19 @@ COSA_Init
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamUlongValue",  X_RDK_OpenVPNClient_SetParamUlongValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamStringValue",  X_RDK_OpenVPNClient_GetParamStringValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamStringValue",  X_RDK_OpenVPNClient_SetParamStringValue);
-	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamBoolValue",  X_RDK_OpenVPNClient_GetParamBoolValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamBoolValue",  X_RDK_OpenVPNClient_SetParamBoolValue);
+	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "OpenVPNClient_GetParamBoolValue",  OpenVPNClient_GetParamBoolValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "OpenVPNClient_SetParamBoolValue",  OpenVPNClient_SetParamBoolValue);
 	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamIntValue",  X_RDK_OpenVPNClient_GetParamIntValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamIntValue",  X_RDK_OpenVPNClient_SetParamIntValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_Commit",  X_RDK_OpenVPNClient_Commit);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetEntryCount",  Tunnel_GetEntryCount);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetEntry",  Tunnel_GetEntry);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_IsUpdated",  Tunnel_IsUpdated);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_Synchronize",  Tunnel_Synchronize);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetParamBoolValue",  Tunnel_GetParamBoolValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetParamStringValue",  Tunnel_GetParamStringValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_SetParamStringValue",  Tunnel_SetParamStringValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetParamIntValue",  Tunnel_GetParamIntValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_SetParamBoolValue",  Tunnel_SetParamBoolValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_SetParamIntValue",  Tunnel_SetParamIntValue);
 
 
 
