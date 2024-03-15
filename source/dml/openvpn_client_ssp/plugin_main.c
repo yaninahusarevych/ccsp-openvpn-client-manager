@@ -40,7 +40,6 @@
 #include "ansc_load_library.h"
 #include "cosa_plugin_api.h"
 #include "plugin_main.h"
-#include "cosa_logging_internal.h"
 #include "cosa_apis_testcomponentplugin.h"
 
 #define THIS_PLUGIN_VERSION                         1
@@ -62,7 +61,6 @@ extern COSAGetInstanceNumberByIndexProc   g_GetInstanceNumberByIndex;    // TODO
 extern COSAGetInterfaceByNameProc         g_GetInterfaceByName;          // TODO: Check if these needed
 extern COSAGetHandleProc                  g_GetMessageBusHandle;         // TODO: Check if these needed
 extern COSAGetSubsystemPrefixProc         g_GetSubsystemPrefix;          // TODO: Check if these needed
-extern PCCSP_CCD_INTERFACE                g_pPnmCcdIf;                   // TODO: Check if these needed
 extern ANSC_HANDLE                        g_MessageBusHandle;            // TODO: Check if these needed
 extern char*                              g_SubsystemPrefix;
 extern COSARegisterCallBackAfterInitDmlProc  g_RegisterCallBackAfterInitDml;
@@ -278,12 +276,7 @@ COSA_Init
     {
         goto EXIT;
     }
-    g_pPnmCcdIf = g_GetInterfaceByName(g_pDslhDmlAgent, CCSP_CCD_INTERFACE_NAME);
 
-    if ( !g_pPnmCcdIf )
-    {
-        goto EXIT;
-    }
     g_RegisterCallBackAfterInitDml = (COSARegisterCallBackAfterInitDmlProc)pPlugInfo->AcquireFunction("COSARegisterCallBackAfterInitDml");
 
     if ( !g_RegisterCallBackAfterInitDml )
