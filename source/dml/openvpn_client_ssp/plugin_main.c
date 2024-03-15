@@ -105,15 +105,8 @@ COSA_Init
     
     pPlugInfo->uPluginVersion       = THIS_PLUGIN_VERSION;
     /* register the back-end apis for the data model */
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamUlongValue",  X_RDK_OpenVPNClient_GetParamUlongValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamUlongValue",  X_RDK_OpenVPNClient_SetParamUlongValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamStringValue",  X_RDK_OpenVPNClient_GetParamStringValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamStringValue",  X_RDK_OpenVPNClient_SetParamStringValue);
 	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "OpenVPNClient_GetParamBoolValue",  OpenVPNClient_GetParamBoolValue);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "OpenVPNClient_SetParamBoolValue",  OpenVPNClient_SetParamBoolValue);
-	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_GetParamIntValue",  X_RDK_OpenVPNClient_GetParamIntValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_SetParamIntValue",  X_RDK_OpenVPNClient_SetParamIntValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDK_OpenVPNClient_Commit",  X_RDK_OpenVPNClient_Commit);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetEntryCount",  Tunnel_GetEntryCount);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetEntry",  Tunnel_GetEntry);
     pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Tunnel_GetParamBoolValue",  Tunnel_GetParamBoolValue);
