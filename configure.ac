@@ -48,5 +48,6 @@ PKG_CHECK_MODULES([DBUS],[dbus-1 >= 1.6.18])
 AC_CONFIG_FILES([Makefile
 		source/Makefile
 		source/dml/Makefile
-        source/openvpn_runner/Makefile])
+		source/dml/openvpn_client_ssp/Makefile
+        	source/openvpn_runner/Makefile])
 AC_OUTPUT
