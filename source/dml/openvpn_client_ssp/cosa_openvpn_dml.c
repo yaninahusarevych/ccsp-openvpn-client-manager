@@ -292,7 +292,7 @@ Tunnel_SetParamBoolValue
 
 	if( AnscEqualString(ParamName, "Enable", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 
         tunnels[index].enable = bValue;
@@ -301,7 +301,7 @@ Tunnel_SetParamBoolValue
 	
     if( AnscEqualString(ParamName, "PersistTUN", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 
         tunnels[index].persist_tun = bValue;
@@ -310,7 +310,7 @@ Tunnel_SetParamBoolValue
 
 	if( AnscEqualString(ParamName, "PersistKey", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 
         tunnels[index].persist_key = bValue;
@@ -319,7 +319,7 @@ Tunnel_SetParamBoolValue
 
 	if( AnscEqualString(ParamName, "TLS-AuthEnabled", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 
         tunnels[index].tls_auth_enable = bValue;
@@ -349,7 +349,7 @@ Tunnel_SetParamStringValue
 
 	if( AnscEqualString(ParamName, "Device", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].device, strValue))
 			return TRUE;
@@ -358,7 +358,7 @@ Tunnel_SetParamStringValue
 
 	if( AnscEqualString(ParamName, "ConnectionType", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].conn_type, strValue))
 			return TRUE;
@@ -367,7 +367,7 @@ Tunnel_SetParamStringValue
 
 	if( AnscEqualString(ParamName, "RemoteAddressIPv4", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].remote_addr_ipv4, strValue))
 			return TRUE;
@@ -376,7 +376,7 @@ Tunnel_SetParamStringValue
 
 	if( AnscEqualString(ParamName, "CertificateAuthority", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].ca_path, strValue))
 			return TRUE;
@@ -385,7 +385,7 @@ Tunnel_SetParamStringValue
 	
     if( AnscEqualString(ParamName, "PublicKey", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].key_pub_path, strValue))
 			return TRUE;
@@ -394,7 +394,7 @@ Tunnel_SetParamStringValue
 
     if( AnscEqualString(ParamName, "PrivateKey", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].key_priv_path, strValue))
 			return TRUE;
@@ -403,7 +403,7 @@ Tunnel_SetParamStringValue
 
     if( AnscEqualString(ParamName, "TAKey", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].ta_path, strValue))
 			return TRUE;
@@ -412,7 +412,7 @@ Tunnel_SetParamStringValue
     
     if( AnscEqualString(ParamName, "IFConfigLocalEndpoint", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].if_local_ep, strValue))
 			return TRUE;
@@ -421,7 +421,7 @@ Tunnel_SetParamStringValue
 
     if( AnscEqualString(ParamName, "IFConfigRemoteEndpoint", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		if (strcpy(tunnels[index].if_remote_ep, strValue))
 			return TRUE;
@@ -452,7 +452,7 @@ Tunnel_SetParamIntValue
 
 	if( AnscEqualString(ParamName, "RemotePort", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		tunnels[index].remote_port = *pIntValue;
 		return FALSE;
@@ -460,7 +460,7 @@ Tunnel_SetParamIntValue
 
 	if( AnscEqualString(ParamName, "RemoteResolveTime", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		tunnels[index].remote_resolve_time = *pIntValue;
 		return FALSE;
@@ -468,7 +468,7 @@ Tunnel_SetParamIntValue
 	
     if( AnscEqualString(ParamName, "User", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		tunnels[index].user= *pIntValue;
 		return FALSE;
@@ -476,7 +476,7 @@ Tunnel_SetParamIntValue
     
     if( AnscEqualString(ParamName, "Group", TRUE))
 	{
-        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CСSP_SUCCESS) 
+        if (PSM_Set_Record_Value2(bus_handle, g_Subsystem, psmPath, ccsp_string, strValue) != CCSP_SUCCESS) 
             return FALSE;
 		tunnels[index].group= *pIntValue;
 		return FALSE;
