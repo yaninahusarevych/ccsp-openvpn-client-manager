@@ -253,19 +253,19 @@ Tunnel_GetParamStringValue
         return 0;
     }
 
-    if( AnscEqualString(ParamName, "TAKey", TRUE)
+    if( AnscEqualString(ParamName, "TAKey", TRUE))
     {
         snprintf(pValue,*pUlSize,"%s",tunnels[index].ta_path);
         return 0;
     }
     
-    if( AnscEqualString(ParamName, "IFConfigLocalEndpoint", TRUE)
+    if( AnscEqualString(ParamName, "IFConfigLocalEndpoint", TRUE))
     {
         snprintf(pValue,*pUlSize,"%s",tunnels[index].if_local_ep);
         return 0;
     }
 
-    if( AnscEqualString(ParamName, "IFConfigRemoteEndpoint", TRUE)
+    if( AnscEqualString(ParamName, "IFConfigRemoteEndpoint", TRUE))
     {
         snprintf(pValue,*pUlSize,"%s",tunnels[index].if_remote_ep);
         return 0;
