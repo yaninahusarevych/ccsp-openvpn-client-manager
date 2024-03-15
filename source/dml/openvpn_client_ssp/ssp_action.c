@@ -184,7 +184,7 @@ ssp_engage
             (
                 (ANSC_HANDLE)pDslhCpeController,
                 CrName, /* CCSP_DBUS_INTERFACE_CR,*/              /* CCSP CR ID */
-                DmPackCreateDataModelXML,             /* Data Model XML file. Can be empty if only base data model supported. */
+                DMPackCreateDataModelXML,             /* Data Model XML file. Can be empty if only base data model supported. */
                 CCSP_COMPONENT_NAME_OPENVPNMGR,            /* Component Name    */
                 CCSP_COMPONENT_VERSION_OPENVPNMGR,         /* Component Version */
                 CCSP_COMPONENT_PATH_OPENVPNMGR,            /* Component Path    */
