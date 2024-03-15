@@ -44,26 +44,26 @@
 
 #define THIS_PLUGIN_VERSION                         1
 
-extern COSAGetParamValueByPathNameProc    g_GetParamValueByPathNameProc;
-extern COSASetParamValueByPathNameProc    g_SetParamValueByPathNameProc;
-extern COSAGetParamValueStringProc        g_GetParamValueString;
-extern COSAGetParamValueUlongProc         g_GetParamValueUlong;
-extern COSAGetParamValueIntProc           g_GetParamValueInt;
-extern COSAGetParamValueBoolProc          g_GetParamValueBool;
-extern COSASetParamValueStringProc        g_SetParamValueString;
-extern COSASetParamValueUlongProc         g_SetParamValueUlong;
-extern COSASetParamValueIntProc           g_SetParamValueInt;
-extern COSASetParamValueBoolProc          g_SetParamValueBool;
-extern COSAGetInstanceNumbersProc         g_GetInstanceNumbers;
-extern COSAValidateHierarchyInterfaceProc g_ValidateInterface;           // TODO: Check if these needed
-extern COSAGetHandleProc                  g_GetRegistryRootFolder;       // TODO: Check if these needed
-extern COSAGetInstanceNumberByIndexProc   g_GetInstanceNumberByIndex;    // TODO: Check if these needed
-extern COSAGetInterfaceByNameProc         g_GetInterfaceByName;          // TODO: Check if these needed
-extern COSAGetHandleProc                  g_GetMessageBusHandle;         // TODO: Check if these needed
-extern COSAGetSubsystemPrefixProc         g_GetSubsystemPrefix;          // TODO: Check if these needed
-extern char*                              g_SubsystemPrefix;
-extern COSARegisterCallBackAfterInitDmlProc  g_RegisterCallBackAfterInitDml;
-extern COSARepopulateTableProc            g_COSARepopulateTable;
+COSAGetParamValueByPathNameProc    g_GetParamValueByPathNameProc;
+COSASetParamValueByPathNameProc    g_SetParamValueByPathNameProc;
+COSAGetParamValueStringProc        g_GetParamValueString;
+COSAGetParamValueUlongProc         g_GetParamValueUlong;
+COSAGetParamValueIntProc           g_GetParamValueInt;
+COSAGetParamValueBoolProc          g_GetParamValueBool;
+COSASetParamValueStringProc        g_SetParamValueString;
+COSASetParamValueUlongProc         g_SetParamValueUlong;
+COSASetParamValueIntProc           g_SetParamValueInt;
+COSASetParamValueBoolProc          g_SetParamValueBool;
+COSAGetInstanceNumbersProc         g_GetInstanceNumbers;
+COSAValidateHierarchyInterfaceProc g_ValidateInterface;           // TODO: Check if these needed
+COSAGetHandleProc                  g_GetRegistryRootFolder;       // TODO: Check if these needed
+COSAGetInstanceNumberByIndexProc   g_GetInstanceNumberByIndex;    // TODO: Check if these needed
+COSAGetInterfaceByNameProc         g_GetInterfaceByName;          // TODO: Check if these needed
+COSAGetHandleProc                  g_GetMessageBusHandle;         // TODO: Check if these needed
+COSAGetSubsystemPrefixProc         g_GetSubsystemPrefix;          // TODO: Check if these needed
+char*                              g_SubsystemPrefix;
+COSARegisterCallBackAfterInitDmlProc  g_RegisterCallBackAfterInitDml;
+COSARepopulateTableProc            g_COSARepopulateTable;
 
 //void *                       g_pDslhDmlAgent;
 extern ANSC_HANDLE     g_MessageBusHandle_Irep;

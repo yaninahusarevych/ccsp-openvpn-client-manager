@@ -40,9 +40,9 @@
 
 
 ANSC_HANDLE                 bus_handle               = NULL;
-extern char                 g_Subsystem[32];
-extern ANSC_HANDLE          g_MessageBusHandle_Irep; 
-extern char                 g_SubSysPrefix_Irep[32];
+char                 g_Subsystem[32];
+ANSC_HANDLE          g_MessageBusHandle_Irep; 
+char                 g_SubSysPrefix_Irep[32];
 
 #ifdef _ANSC_LINUX
 DBusHandlerResult
