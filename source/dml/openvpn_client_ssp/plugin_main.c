@@ -55,7 +55,6 @@ extern COSASetParamValueUlongProc         g_SetParamValueUlong;
 extern COSASetParamValueIntProc           g_SetParamValueInt;
 extern COSASetParamValueBoolProc          g_SetParamValueBool;
 extern COSAGetInstanceNumbersProc         g_GetInstanceNumbers;
-extern 
 extern COSAValidateHierarchyInterfaceProc g_ValidateInterface;           // TODO: Check if these needed
 extern COSAGetHandleProc                  g_GetRegistryRootFolder;       // TODO: Check if these needed
 extern COSAGetInstanceNumberByIndexProc   g_GetInstanceNumberByIndex;    // TODO: Check if these needed
