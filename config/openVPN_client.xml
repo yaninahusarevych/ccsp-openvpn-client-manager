@@ -154,7 +154,7 @@
                         <parameter>
                             <name>ApplySettings</name>
                             <type>boolean</type>
-                            <syntax>bool</type>
+                            <syntax>bool</syntax>
                             <writable>true</writable>
                         </parameter>
                     </parameters>
