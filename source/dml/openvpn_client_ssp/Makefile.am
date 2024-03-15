@@ -26,6 +26,6 @@ AM_CFLAGS = -D_ANSC_LINUX -D_ANSC_USER -D_ANSC_LITTLE_ENDIAN_ $(DBUS_CFLAGS)
 
 AM_LDFLAGS = -lccsp_common $(DBUS_LIBS)
 
-openvpn_client_ssp_SOURCES = cosa_openvpn_dml.c plugin_main.c ssp_action.c ssp_main.c ssp_messagebus_interface.c
+openvpn_client_ssp_SOURCES = cosa_openvpn_dml.c plugin_main.c ssp_action.c ssp_main.c ssp_messagebus_interface.c cosa_apis_testcomponentplugin.c
 
 
