@@ -54,6 +54,7 @@
 #include "plugin_main.h"
 #include "dslh_dmagnt_interface.h"
 #include "ccsp_trace.h"
+#include "dm_pack_create_func.h"
 
 PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController        = NULL;
 PCOMPONENT_COMMON_OPENVPNMGR          g_pComponent_COMMON_openvpnmgr  = NULL;
