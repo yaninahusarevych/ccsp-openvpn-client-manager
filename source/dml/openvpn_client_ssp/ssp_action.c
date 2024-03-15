@@ -56,12 +56,12 @@
 #include "ccsp_trace.h"
 
 PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController        = NULL;
-PCOMPONENT_COMMON_TESTCOMPONENT          g_pComponent_COMMON_testcomponent  = NULL;
+PCOMPONENT_COMMON_OPENVPNMGR          g_pComponent_COMMON_openvpnmgr  = NULL;
 PCCSP_CCD_INTERFACE             pSsdCcdIf                 = (PCCSP_CCD_INTERFACE        )NULL;
 PDSLH_LCB_INTERFACE             pDslhLcbIf                = (PDSLH_LCB_INTERFACE        )NULL;
 extern char                     g_Subsystem[32];
 
-#define  CCSP_DATAMODEL_XML_FILE           "TestComponent.xml"
+#define  CCSP_DATAMODEL_XML_FILE           "openVPN_client.xml"
 
 extern  ANSC_HANDLE                        bus_handle;
 extern  ULONG                              g_ulAllocatedSizePeak;
@@ -73,18 +73,18 @@ ssp_create
 {
     /* Create component common data model object */
 
-     g_pComponent_COMMON_testcomponent = (PCOMPONENT_COMMON_TESTCOMPONENT)AnscAllocateMemory(sizeof(COMPONENT_COMMON_TESTCOMPONENT));
+     g_pComponent_COMMON_openvpnmgr = (PCOMPONENT_COMMON_OPENVPNMGR)AnscAllocateMemory(sizeof(COMPONENT_COMMON_OPENVPNMGR));
 
-    if ( ! g_pComponent_COMMON_testcomponent )
+    if ( ! g_pComponent_COMMON_openvpnmgr )
     {
         return ANSC_STATUS_RESOURCES;
     }
 
-    ComponentCommonDmInit( g_pComponent_COMMON_testcomponent);
+    ComponentCommonDmInit( g_pComponent_COMMON_openvpnmgr);
 
-     g_pComponent_COMMON_testcomponent->Name     = AnscCloneString(CCSP_COMPONENT_NAME_TESTCOMPONENT);
-     g_pComponent_COMMON_testcomponent->Version  = 1;
-     g_pComponent_COMMON_testcomponent->Author   = AnscCloneString("Your name");
+     g_pComponent_COMMON_openvpnmgr->Name     = AnscCloneString(CCSP_COMPONENT_NAME_OPENVPNMGR);
+     g_pComponent_COMMON_openvpnmgr->Version  = 1;
+     g_pComponent_COMMON_openvpnmgr->Author   = AnscCloneString("Your name");
 
     /* Create ComponentCommonDatamodel interface*/
     if ( !pSsdCcdIf )
@@ -161,7 +161,7 @@ ssp_engage
     PCCC_MBI_INTERFACE              pSsdMbiIf                   = (PCCC_MBI_INTERFACE)MsgHelper_CreateCcdMbiIf((void*)bus_handle, g_Subsystem);
     char                            CrName[256];
 
-     g_pComponent_COMMON_testcomponent->Health = CCSP_COMMON_COMPONENT_HEALTH_Yellow;
+     g_pComponent_COMMON_openvpnmgr->Health = CCSP_COMMON_COMPONENT_HEALTH_Yellow;
 
     /* data model configuration */
     pDslhCpeController->AddInterface((ANSC_HANDLE)pDslhCpeController, (ANSC_HANDLE)pDslhLcbIf);
@@ -180,21 +180,21 @@ ssp_engage
     }
 
     returnStatus =
-        pDslhCpeController->RegisterCcspDataModel
+        pDslhCpeController->RegisterCcspDataModel2
             (
                 (ANSC_HANDLE)pDslhCpeController,
                 CrName, /* CCSP_DBUS_INTERFACE_CR,*/              /* CCSP CR ID */
-                CCSP_DATAMODEL_XML_FILE,             /* Data Model XML file. Can be empty if only base data model supported. */
-                CCSP_COMPONENT_NAME_TESTCOMPONENT,            /* Component Name    */
-                CCSP_COMPONENT_VERSION_TESTCOMPONENT,         /* Component Version */
-                CCSP_COMPONENT_PATH_TESTCOMPONENT,            /* Component Path    */
+                DmPackCreateDataModelXML,             /* Data Model XML file. Can be empty if only base data model supported. */
+                CCSP_COMPONENT_NAME_OPENVPNMGR,            /* Component Name    */
+                CCSP_COMPONENT_VERSION_OPENVPNMGR,         /* Component Version */
+                CCSP_COMPONENT_PATH_OPENVPNMGR,            /* Component Path    */
                 g_Subsystem /* Component Prefix  */
             );
 
     if ( returnStatus == ANSC_STATUS_SUCCESS || returnStatus == CCSP_SUCCESS)
     {
         /* System is fully initialized */
-         g_pComponent_COMMON_testcomponent->Health = CCSP_COMMON_COMPONENT_HEALTH_Green;
+         g_pComponent_COMMON_openvpnmgr->Health = CCSP_COMMON_COMPONENT_HEALTH_Green;
     }
 
     return ANSC_STATUS_SUCCESS;
@@ -210,7 +210,7 @@ ssp_cancel
     char                            CrName[256];
     char                            CpName[256];
 
-    if(  g_pComponent_COMMON_testcomponent == NULL)
+    if(  g_pComponent_COMMON_openvpnmgr == NULL)
     {
         return ANSC_STATUS_SUCCESS;
     }
@@ -218,12 +218,12 @@ ssp_cancel
     if ( g_Subsystem[0] != 0 )
     {
         _ansc_sprintf(CrName, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
-        _ansc_sprintf(CpName, "%s%s", g_Subsystem, CCSP_COMPONENT_NAME_TESTCOMPONENT);
+        _ansc_sprintf(CpName, "%s%s", g_Subsystem, CCSP_COMPONENT_NAME_OPENVPNMGR);
     }
     else
     {
         _ansc_sprintf(CrName, "%s", CCSP_DBUS_INTERFACE_CR);
-        _ansc_sprintf(CpName, "%s", CCSP_COMPONENT_NAME_TESTCOMPONENT);
+        _ansc_sprintf(CpName, "%s", CCSP_COMPONENT_NAME_OPENVPNMGR);
     }
     /* unregister component */
     nRet = CcspBaseIf_unregisterComponent(bus_handle, CrName, CpName );  
@@ -233,9 +233,9 @@ ssp_cancel
     AnscFreeMemory(pDslhCpeController);
 
     if ( pSsdCcdIf ) AnscFreeMemory(pSsdCcdIf);
-    if (  g_pComponent_COMMON_testcomponent ) AnscFreeMemory( g_pComponent_COMMON_testcomponent);
+    if (  g_pComponent_COMMON_openvpnmgr ) AnscFreeMemory( g_pComponent_COMMON_openvpnmgr);
 
-     g_pComponent_COMMON_testcomponent = NULL;
+     g_pComponent_COMMON_openvpnmgr = NULL;
     pSsdCcdIf                = NULL;
     pDslhCpeController       = NULL;
 
@@ -249,7 +249,7 @@ ssp_CcdIfGetComponentName
         ANSC_HANDLE                     hThisObject
     )
 {
-    return  g_pComponent_COMMON_testcomponent->Name;
+    return  g_pComponent_COMMON_openvpnmgr->Name;
 }
 
 
@@ -259,7 +259,7 @@ ssp_CcdIfGetComponentVersion
         ANSC_HANDLE                     hThisObject
     )
 {
-    return  g_pComponent_COMMON_testcomponent->Version;
+    return  g_pComponent_COMMON_openvpnmgr->Version;
 }
 
 
@@ -269,7 +269,7 @@ ssp_CcdIfGetComponentAuthor
         ANSC_HANDLE                     hThisObject
     )
 {
-    return  g_pComponent_COMMON_testcomponent->Author;
+    return  g_pComponent_COMMON_openvpnmgr->Author;
 }
 
 
@@ -279,7 +279,7 @@ ssp_CcdIfGetComponentHealth
         ANSC_HANDLE                     hThisObject
     )
 {
-    return  g_pComponent_COMMON_testcomponent->Health;
+    return  g_pComponent_COMMON_openvpnmgr->Health;
 }
 
 
@@ -289,7 +289,7 @@ ssp_CcdIfGetComponentState
         ANSC_HANDLE                     hThisObject
     )
 {
-    return  g_pComponent_COMMON_testcomponent->State;
+    return  g_pComponent_COMMON_openvpnmgr->State;
 }
 
 
@@ -300,7 +300,7 @@ ssp_CcdIfGetLoggingEnabled
         ANSC_HANDLE                     hThisObject
     )
 {
-    return  g_pComponent_COMMON_testcomponent->LogEnable;
+    return  g_pComponent_COMMON_openvpnmgr->LogEnable;
 }
 
 
@@ -311,9 +311,9 @@ ssp_CcdIfSetLoggingEnabled
         BOOL                            bEnabled
     )
 {
-    if( g_pComponent_COMMON_testcomponent->LogEnable == bEnabled) return ANSC_STATUS_SUCCESS;
-     g_pComponent_COMMON_testcomponent->LogEnable = bEnabled;
-    if(bEnabled) g_iTraceLevel = (INT)  g_pComponent_COMMON_testcomponent->LogLevel;
+    if( g_pComponent_COMMON_openvpnmgr->LogEnable == bEnabled) return ANSC_STATUS_SUCCESS;
+     g_pComponent_COMMON_openvpnmgr->LogEnable = bEnabled;
+    if(bEnabled) g_iTraceLevel = (INT)  g_pComponent_COMMON_openvpnmgr->LogLevel;
     else g_iTraceLevel = CCSP_TRACE_INVALID_LEVEL;
 
     return ANSC_STATUS_SUCCESS;
@@ -326,7 +326,7 @@ ssp_CcdIfGetLoggingLevel
         ANSC_HANDLE                     hThisObject
     )
 {
-    return  g_pComponent_COMMON_testcomponent->LogLevel;
+    return  g_pComponent_COMMON_openvpnmgr->LogLevel;
 }
 
 
@@ -337,9 +337,9 @@ ssp_CcdIfSetLoggingLevel
         ULONG                           LogLevel
     )
 {
-    if( g_pComponent_COMMON_testcomponent->LogLevel == LogLevel) return ANSC_STATUS_SUCCESS;
-     g_pComponent_COMMON_testcomponent->LogLevel = LogLevel;
-    if( g_pComponent_COMMON_testcomponent->LogEnable) g_iTraceLevel = (INT)  g_pComponent_COMMON_testcomponent->LogLevel;
+    if( g_pComponent_COMMON_openvpnmgr->LogLevel == LogLevel) return ANSC_STATUS_SUCCESS;
+     g_pComponent_COMMON_openvpnmgr->LogLevel = LogLevel;
+    if( g_pComponent_COMMON_openvpnmgr->LogEnable) g_iTraceLevel = (INT)  g_pComponent_COMMON_openvpnmgr->LogLevel;
 
     return ANSC_STATUS_SUCCESS;
 }
@@ -361,7 +361,7 @@ ssp_CcdIfGetMemMinUsage
         ANSC_HANDLE                     hThisObject
     )
 {
-    return  g_pComponent_COMMON_testcomponent->MemMinUsage;
+    return  g_pComponent_COMMON_openvpnmgr->MemMinUsage;
 }
 
 
@@ -373,7 +373,7 @@ ssp_CcdIfGetMemConsumed
 {
     LONG             size = 0;
 
-    size = AnscGetComponentMemorySize(CCSP_COMPONENT_NAME_TESTCOMPONENT);
+    size = AnscGetComponentMemorySize(CCSP_COMPONENT_NAME_OPENVPNMGR);
     if (size == -1 )
         size = 0;
 
@@ -389,7 +389,7 @@ ssp_CcdIfApplyChanges
 {
     ANSC_STATUS                         returnStatus    = ANSC_STATUS_SUCCESS;
     /* Assume the parameter settings are committed immediately. */
-    /* AnscSetTraceLevel((INT) g_pComponent_COMMON_testcomponent->LogLevel); */
+    /* AnscSetTraceLevel((INT) g_pComponent_COMMON_openvpnmgr->LogLevel); */
 
     return returnStatus;
 }

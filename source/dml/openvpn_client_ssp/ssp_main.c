@@ -59,18 +59,18 @@ int  cmd_dispatch(int  command)
 
                 if ( g_Subsystem[0] != 0 )
                 {
-                    _ansc_sprintf(CName, "%s%s", g_Subsystem, CCSP_COMPONENT_ID_TESTCOMPONENT);
+                    _ansc_sprintf(CName, "%s%s", g_Subsystem, CCSP_COMPONENT_ID_OPENVPNMGR);
                 }
                 else
                 {
-                    _ansc_sprintf(CName, "%s", CCSP_COMPONENT_ID_TESTCOMPONENT);
+                    _ansc_sprintf(CName, "%s", CCSP_COMPONENT_ID_OPENVPNMGR);
                 }
 
                 ssp_Mbi_MessageBusEngage
                     ( 
                         CName,
                         CCSP_MSG_BUS_CFG,
-                        CCSP_COMPONENT_PATH_TESTCOMPONENT
+                        CCSP_COMPONENT_PATH_OPENVPNMGR
                     );
             }
 #endif
@@ -230,7 +230,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    pComponentName          = CCSP_COMPONENT_NAME_TESTCOMPONENT;
+    pComponentName          = CCSP_COMPONENT_NAME_OPENVPNMGR;
 
 #if  defined(_ANSC_WINDOWSNT)
 
@@ -274,7 +274,7 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Cdm_Init: %s\n", Cdm_StrError(err));
         exit(1);
     }
-    system("touch /tmp/testcomponent_initialized");
+    system("touch /tmp/openvpnmgr_initialized");
 
     if ( bRunAsDaemon )
     {

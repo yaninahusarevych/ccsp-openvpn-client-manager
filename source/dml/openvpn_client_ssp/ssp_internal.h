@@ -47,13 +47,13 @@
 #define  CCSP_COMMON_COMPONENT_FREERESOURCES_PRIORITY_High  1
 #define  CCSP_COMMON_COMPONENT_FREERESOURCES_PRIORITY_Low   2
 
-#define  CCSP_COMPONENT_ID_TESTCOMPONENT                             "com.cisco.spvtg.ccsp.testcomponent"
-#define  CCSP_COMPONENT_NAME_TESTCOMPONENT                           "com.cisco.spvtg.ccsp.testcomponent"
-#define  CCSP_COMPONENT_VERSION_TESTCOMPONENT                        1
-#define  CCSP_COMPONENT_PATH_TESTCOMPONENT                           "/com/cisco/spvtg/ccsp/testcomponent"
+#define  CCSP_COMPONENT_ID_OPENVPNMGR                             "com.cisco.spvtg.ccsp.openvpnmgr"
+#define  CCSP_COMPONENT_NAME_OPENVPNMGR                           "com.cisco.spvtg.ccsp.COM"
+#define  CCSP_COMPONENT_VERSION_OPENVPNMGR                        1
+#define  CCSP_COMPONENT_PATH_OPENVPNMGR                           "/com/cisco/spvtg/ccsp/openvpnmgr"
 
 typedef  struct
-_COMPONENT_COMMON_TESTCOMPONENT
+_COMPONENT_COMMON_OPENVPNMGR
 {
     char*                           Name;
     ULONG                           Version;
@@ -68,43 +68,43 @@ _COMPONENT_COMMON_TESTCOMPONENT
     ULONG                           MemMinUsage;
     ULONG                           MemConsumed;
 }
-COMPONENT_COMMON_TESTCOMPONENT,  *PCOMPONENT_COMMON_TESTCOMPONENT;
+COMPONENT_COMMON_OPENVPNMGR,  *PCOMPONENT_COMMON_OPENVPNMGR;
 
-#define ComponentCommonDmInit(component_com_testcomponent)                                          \
+#define ComponentCommonDmInit(component_com_openvpnmgr)                                          \
         {                                                                                  \
-            AnscZeroMemory(component_com_testcomponent, sizeof(COMPONENT_COMMON_TESTCOMPONENT));             \
-            component_com_testcomponent->Name        = NULL;                                        \
-            component_com_testcomponent->Version     = 1;                                           \
-            component_com_testcomponent->Author      = NULL;                                        \
-            component_com_testcomponent->Health      = CCSP_COMMON_COMPONENT_HEALTH_Red;            \
-            component_com_testcomponent->State       = CCSP_COMMON_COMPONENT_STATE_Running;         \
+            AnscZeroMemory(component_com_openvpnmgr, sizeof(COMPONENT_COMMON_OPENVPNMGR));             \
+            component_com_openvpnmgr->Name        = NULL;                                        \
+            component_com_openvpnmgr->Version     = 1;                                           \
+            component_com_openvpnmgr->Author      = NULL;                                        \
+            component_com_openvpnmgr->Health      = CCSP_COMMON_COMPONENT_HEALTH_Red;            \
+            component_com_openvpnmgr->State       = CCSP_COMMON_COMPONENT_STATE_Running;         \
             if(g_iTraceLevel >= CCSP_TRACE_LEVEL_EMERGENCY)                                \
-                component_com_testcomponent->LogLevel = (ULONG) g_iTraceLevel;                      \
-            component_com_testcomponent->LogEnable   = TRUE;                                        \
-            component_com_testcomponent->MemMaxUsage = 0;                                           \
-            component_com_testcomponent->MemMinUsage = 0;                                           \
-            component_com_testcomponent->MemConsumed = 0;                                           \
+                component_com_openvpnmgr->LogLevel = (ULONG) g_iTraceLevel;                      \
+            component_com_openvpnmgr->LogEnable   = TRUE;                                        \
+            component_com_openvpnmgr->MemMaxUsage = 0;                                           \
+            component_com_openvpnmgr->MemMinUsage = 0;                                           \
+            component_com_openvpnmgr->MemConsumed = 0;                                           \
         }
 
 
-#define  ComponentCommonDmClean(component_com_testcomponent)                                        \
+#define  ComponentCommonDmClean(component_com_openvpnmgr)                                        \
          {                                                                                  \
-            if ( component_com_testcomponent->Name )                                                \
+            if ( component_com_openvpnmgr->Name )                                                \
             {                                                                               \
-                AnscFreeMemory(component_com_testcomponent->Name);                                  \
+                AnscFreeMemory(component_com_openvpnmgr->Name);                                  \
             }                                                                               \
                                                                                             \
-            if ( component_com_testcomponent->Author )                                              \
+            if ( component_com_openvpnmgr->Author )                                              \
             {                                                                               \
-                AnscFreeMemory(component_com_testcomponent->Author);                                \
+                AnscFreeMemory(component_com_openvpnmgr->Author);                                \
             }                                                                               \
          }
 
 
-#define  ComponentCommonDmFree(component_com_testcomponent)                                         \
+#define  ComponentCommonDmFree(component_com_openvpnmgr)                                         \
          {                                                                                  \
-            ComponentCommonDmClean(component_com_testcomponent);                                    \
-            AnscFreeMemory(component_com_testcomponent);                                            \
+            ComponentCommonDmClean(component_com_openvpnmgr);                                    \
+            AnscFreeMemory(component_com_openvpnmgr);                                            \
          }
 
 int  cmd_dispatch(int  command);
