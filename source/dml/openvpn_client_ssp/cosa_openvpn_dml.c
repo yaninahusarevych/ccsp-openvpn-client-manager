@@ -249,7 +249,7 @@ Tunnel_GetParamStringValue
 
     if( AnscEqualString(ParamName, "PrivateKey", TRUE))
     {
-        snprintf(pValue,*pUlSize,"%s",tunnels[index].key_path);
+        snprintf(pValue,*pUlSize,"%s",tunnels[index].key_priv_path);
         return 0;
     }
 
