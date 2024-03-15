@@ -61,7 +61,6 @@ extern COSAGetInstanceNumberByIndexProc   g_GetInstanceNumberByIndex;    // TODO
 extern COSAGetInterfaceByNameProc         g_GetInterfaceByName;          // TODO: Check if these needed
 extern COSAGetHandleProc                  g_GetMessageBusHandle;         // TODO: Check if these needed
 extern COSAGetSubsystemPrefixProc         g_GetSubsystemPrefix;          // TODO: Check if these needed
-extern ANSC_HANDLE                        g_MessageBusHandle;            // TODO: Check if these needed
 extern char*                              g_SubsystemPrefix;
 extern COSARegisterCallBackAfterInitDmlProc  g_RegisterCallBackAfterInitDml;
 extern COSARepopulateTableProc            g_COSARepopulateTable;
@@ -294,13 +293,8 @@ COSA_Init
     {
         goto EXIT;
     }
-    g_MessageBusHandle = (ANSC_HANDLE)g_GetMessageBusHandle(g_pDslhDmlAgent);
-    if ( g_MessageBusHandle == NULL )
-    {
-        goto EXIT;
-    }
 
-
+EXIT:
     return  0;
 }
 
