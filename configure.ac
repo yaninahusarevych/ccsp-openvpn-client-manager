@@ -6,7 +6,7 @@ AC_INIT(ccsp-openvpn-client-manager, version-1.0)
 AC_CONFIG_SRCDIR([config])
 AC_CONFIG_MACRO_DIR([config])
 AC_CONFIG_AUX_DIR([config])
-AM_INIT_AUTOMAKE([foreign no-dist-gzip dist-bzip2 1.9])
+AM_INIT_AUTOMAKE([foreign])
 LT_INIT
 
 dnl subdirectories.
