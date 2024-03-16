@@ -91,6 +91,8 @@ COSA_Init
     COSASetParamValueIntProc        pSetParamValueIntProc       = (COSASetParamValueIntProc          )NULL;
     COSASetParamValueBoolProc       pSetParamValueBoolProc      = (COSASetParamValueBoolProc         )NULL;
     COSAGetInstanceNumbersProc      pGetInstanceNumbersProc     = (COSAGetInstanceNumbersProc        )NULL;
+    COSARegisterCallBackAfterInitDmlProc pRegisterCallBackAfterInitDmlProc = (COSARegisterCallBackAfterInitDmlProc)NULL;
+    COSARepopulateTableProc        pCOSARepopulateTable        = (COSARepopulateTableProc           )NULL;
 
     COSAValidateHierarchyInterfaceProc
         pValInterfaceProc           = (COSAValidateHierarchyInterfaceProc)NULL;
@@ -316,13 +318,6 @@ COSA_Init
     if ( !g_COSARepopulateTable )
     {
         openvpnmgr_log("cosa_init: g_COSARepopulateTable is NULL");
-        goto EXIT;
-    }
-    /* Get Message Bus Handle */
-    g_GetMessageBusHandle = (COSAGetHandleProc)pPlugInfo->AcquireFunction("COSAGetMessageBusHandle");
-    if ( g_GetMessageBusHandle == NULL )
-    {
-        openvpnmgr_log("cosa_init: g_GetMessageBusHandle is NULL");
         goto EXIT;
     }
 
