@@ -150,7 +150,7 @@ ssp_create
     if ( !pDslhCpeController )
     {
         CcspTraceWarning(("CANNOT Create pDslhCpeController... Exit!\n"));
-        openvpnmgr_log("ssp_create --  CANNOT Create pDslhCpeController... Exit!")
+        openvpnmgr_log("ssp_create --  CANNOT Create pDslhCpeController... Exit!");
 
         return ANSC_STATUS_RESOURCES;
     }
@@ -203,7 +203,7 @@ ssp_engage
     {
         /* System is fully initialized */
          g_pComponent_COMMON_openvpnmgr->Health = CCSP_COMMON_COMPONENT_HEALTH_Green;
-         openvpnmgr_log("ssp_engage --  openvpnmgr: CCSP_COMMON_COMPONENT_HEALTH_Green\n")
+         openvpnmgr_log("ssp_engage --  openvpnmgr: CCSP_COMMON_COMPONENT_HEALTH_Green\n");
     }
 
     return ANSC_STATUS_SUCCESS;
