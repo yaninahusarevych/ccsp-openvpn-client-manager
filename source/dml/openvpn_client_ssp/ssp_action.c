@@ -55,6 +55,7 @@
 #include "dslh_dmagnt_interface.h"
 #include "ccsp_trace.h"
 #include "dm_pack_create_func.h"
+#include "utils.h"
 
 PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController        = NULL;
 PCOMPONENT_COMMON_OPENVPNMGR          g_pComponent_COMMON_openvpnmgr  = NULL;
@@ -78,6 +79,7 @@ ssp_create
 
     if ( ! g_pComponent_COMMON_openvpnmgr )
     {
+        openvpnmgr_log("ssp_create --  g_pComponent_COMMON_openvpnmgr is NULL\n");
         return ANSC_STATUS_RESOURCES;
     }
 
@@ -94,6 +96,7 @@ ssp_create
 
         if ( !pSsdCcdIf )
         {
+            openvpnmgr_log("ssp_create --  pSsdCcdIf is NULL\n");
             return ANSC_STATUS_RESOURCES;
         }
         else
@@ -127,6 +130,7 @@ ssp_create
 
         if ( !pDslhLcbIf )
         {
+            openvpnmgr_log("ssp_create --  pDslhLcbIf is NULL\n");
             return ANSC_STATUS_RESOURCES;
         }
         else
@@ -146,6 +150,7 @@ ssp_create
     if ( !pDslhCpeController )
     {
         CcspTraceWarning(("CANNOT Create pDslhCpeController... Exit!\n"));
+        openvpnmgr_log("ssp_create --  CANNOT Create pDslhCpeController... Exit!")
 
         return ANSC_STATUS_RESOURCES;
     }
@@ -180,6 +185,7 @@ ssp_engage
         _ansc_sprintf(CrName, "%s", CCSP_DBUS_INTERFACE_CR);
     }
 
+    openvpnmgr_log("before RegisterCcspDataModel2");
     returnStatus =
         pDslhCpeController->RegisterCcspDataModel2
             (
@@ -191,11 +197,13 @@ ssp_engage
                 CCSP_COMPONENT_PATH_OPENVPNMGR,            /* Component Path    */
                 g_Subsystem /* Component Prefix  */
             );
+    openvpnmgr_log("after RegisterCcspDataModel2");
 
     if ( returnStatus == ANSC_STATUS_SUCCESS || returnStatus == CCSP_SUCCESS)
     {
         /* System is fully initialized */
          g_pComponent_COMMON_openvpnmgr->Health = CCSP_COMMON_COMPONENT_HEALTH_Green;
+         openvpnmgr_log("ssp_engage --  openvpnmgr: CCSP_COMMON_COMPONENT_HEALTH_Green\n")
     }
 
     return ANSC_STATUS_SUCCESS;
@@ -229,6 +237,7 @@ ssp_cancel
     /* unregister component */
     nRet = CcspBaseIf_unregisterComponent(bus_handle, CrName, CpName );  
     AnscTrace("unregisterComponent returns %d\n", nRet);
+    openvpnmgr_log("ssp_cancel -- unregisterComponent returns %d\n", nRet);
 
     pDslhCpeController->Cancel((ANSC_HANDLE)pDslhCpeController);
     AnscFreeMemory(pDslhCpeController);

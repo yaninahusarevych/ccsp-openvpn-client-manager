@@ -39,6 +39,7 @@
 #endif
 
 #include "ssp_global.h"
+#include "utils.h"
 #include "stdlib.h"
 #include "ccsp_dm_api.h"
 
@@ -51,8 +52,8 @@ int  cmd_dispatch(int  command)
     {
         case    'e' :
 
-#ifdef _ANSC_LINUX
             CcspTraceInfo(("Connect to bus daemon...\n"));
+            openvpnmgr_log("Connect to bus daemon...\n");
 
             {
                 char                            CName[256];
@@ -73,10 +74,12 @@ int  cmd_dispatch(int  command)
                         CCSP_COMPONENT_PATH_OPENVPNMGR
                     );
             }
-#endif
 
+            openvpnmgr_log("openvpnmgr: Connect to bus daemon done...Calling ssp_create\n");
             ssp_create();
+            openvpnmgr_log("openvpnmgr: ssp_create done...\n");
             ssp_engage();
+            openvpnmgr_log("openvpnmgr: ssp_engage done...\n");
 
             break;
 
@@ -130,7 +133,6 @@ static void _print_stack_backtrace(void)
 #endif
 }
 
-#if defined(_ANSC_LINUX)
 static void daemonize(void) {
 	int fd;
 	switch (fork()) {
@@ -179,33 +181,38 @@ void sig_handler(int sig)
     if ( sig == SIGINT ) {
     	signal(SIGINT, sig_handler); /* reset it to this function */
     	CcspTraceInfo(("SIGINT received!\n"));
+        openvpnmgr_log("SIGINT received!\n");
 	exit(0);
     }
     else if ( sig == SIGUSR1 ) {
     	signal(SIGUSR1, sig_handler); /* reset it to this function */
     	CcspTraceInfo(("SIGUSR1 received!\n"));
+        openvpnmgr_log("SIGUSR1 received!\n");
     }
     else if ( sig == SIGUSR2 ) {
     	CcspTraceInfo(("SIGUSR2 received!\n"));
+        openvpnmgr_log("SIGUSR2 received!\n");
     }
     else if ( sig == SIGCHLD ) {
     	signal(SIGCHLD, sig_handler); /* reset it to this function */
     	CcspTraceInfo(("SIGCHLD received!\n"));
+        openvpnmgr_log("SIGCHLD received!\n");
     }
     else if ( sig == SIGPIPE ) {
     	signal(SIGPIPE, sig_handler); /* reset it to this function */
     	CcspTraceInfo(("SIGPIPE received!\n"));
+        openvpnmgr_log("SIGPIPE received!\n");
     }
     else {
     	/* get stack trace first */
     	_print_stack_backtrace();
     	CcspTraceInfo(("Signal %d received, exiting!\n", sig));
+        openvpnmgr_log("Signal %d received, exiting!\n", sig);
     	exit(0);
     }
 
 }
 
-#endif
 int main(int argc, char* argv[])
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
@@ -232,19 +239,6 @@ int main(int argc, char* argv[])
 
     pComponentName          = CCSP_COMPONENT_NAME_OPENVPNMGR;
 
-#if  defined(_ANSC_WINDOWSNT)
-
-    AnscStartupSocketWrapper(NULL);
-
-    cmd_dispatch('e');
-
-    while ( cmdChar != 'q' )
-    {
-        cmdChar = getchar();
-
-        cmd_dispatch(cmdChar);
-    }
-#elif defined(_ANSC_LINUX)
     if ( bRunAsDaemon ) 
         daemonize();
 
@@ -268,10 +262,12 @@ int main(int argc, char* argv[])
 #else
     subSys = NULL;      /* use default sub-system */
 #endif
+    openvpnmgr_log("Calling Cdm_Init...\n");
     err = Cdm_Init(bus_handle, subSys, NULL, NULL, pComponentName);
     if (err != CCSP_SUCCESS)
     {
         fprintf(stderr, "Cdm_Init: %s\n", Cdm_StrError(err));
+        openvpnmgr_log("Cdm_Init: %s\n", Cdm_StrError(err));
         exit(1);
     }
     system("touch /tmp/openvpnmgr_initialized");
@@ -293,7 +289,6 @@ int main(int argc, char* argv[])
         }
     }
 
-#endif
 	err = Cdm_Term();
 	if (err != CCSP_SUCCESS)
 	{
@@ -302,6 +297,7 @@ int main(int argc, char* argv[])
 	}
 
 	ssp_cancel();
+    openvpnmgr_log("ssp_cancel...");
 
     return 0;
 }

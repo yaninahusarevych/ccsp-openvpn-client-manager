@@ -37,14 +37,13 @@
 **********************************************************************************/
 
 #include "ssp_global.h"
-
+#include "utils.h"
 
 ANSC_HANDLE                 bus_handle               = NULL;
 extern char                 g_Subsystem[32];
 ANSC_HANDLE          g_MessageBusHandle_Irep; 
 char                 g_SubSysPrefix_Irep[32];
 
-#ifdef _ANSC_LINUX
 DBusHandlerResult
 CcspComp_path_message_func
     (
@@ -61,6 +60,7 @@ CcspComp_path_message_func
     reply = dbus_message_new_method_return (message);
     if (reply == NULL)
     {
+        openvpnmgr_log("Can't create reply to method call\n");
         return DBUS_HANDLER_RESULT_HANDLED;
     }
 
@@ -89,6 +89,7 @@ ssp_Mbi_MessageBusEngage
     if ( ! component_id || ! path )
     {
         CcspTraceError((" !!! ssp_Mbi_MessageBusEngage: component_id or path is NULL !!!\n"));
+        openvpnmgr_log(" !!! ssp_Mbi_MessageBusEngage: component_id or path is NULL !!!\n");
     }
 
     /* Connect to message bus */
@@ -105,11 +106,13 @@ ssp_Mbi_MessageBusEngage
     if ( returnStatus != ANSC_STATUS_SUCCESS )
     {
         CcspTraceError((" !!! SSD Message Bus Init ERROR !!!\n"));
+        openvpnmgr_log(" !!! SSD Message Bus Init ERROR !!!\n");
 
         return returnStatus;
     }
 
     CcspTraceInfo(("INFO: bus_handle: 0x%8x \n", bus_handle));
+    openvpnmgr_log("INFO: bus_handle: 0x%8x \n", bus_handle);
     g_MessageBusHandle_Irep = bus_handle;
     AnscCopyString(g_SubSysPrefix_Irep, g_Subsystem);
 
@@ -147,7 +150,7 @@ ssp_Mbi_MessageBusEngage
     if ( returnStatus != CCSP_Message_Bus_OK )
     {
         CcspTraceError((" !!! CCSP_Message_Bus_Register_Path ERROR returnStatus: %d\n!!!\n", returnStatus));
-
+        openvpnmgr_log(" !!! CCSP_Message_Bus_Register_Path ERROR returnStatus: %d\n!!!\n", returnStatus);
         return returnStatus;
     }
 
@@ -164,7 +167,7 @@ ssp_Mbi_MessageBusEngage
     if ( returnStatus != CCSP_Message_Bus_OK )
     {
          CcspTraceError((" !!! CCSP_Message_Bus_Register_Event: CurrentSessionIDSignal ERROR returnStatus: %d!!!\n", returnStatus));
-
+        openvpnmgr_log(" !!! CCSP_Message_Bus_Register_Event: CurrentSessionIDSignal ERROR returnStatus: %d!!!\n", returnStatus);
         return returnStatus;
     }
 
@@ -172,7 +175,6 @@ ssp_Mbi_MessageBusEngage
 
 }
 
-#endif
 
 int
 ssp_Mbi_Initialize
