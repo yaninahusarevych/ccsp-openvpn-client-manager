@@ -41,6 +41,7 @@
 #include "cosa_plugin_api.h"
 #include "plugin_main.h"
 #include "cosa_apis_openvpn.h"
+#include "utils.h"
 
 #define THIS_PLUGIN_VERSION                         1
 
@@ -77,6 +78,7 @@ COSA_Init
     )
 {
     PCOSA_PLUGIN_INFO               pPlugInfo  = (PCOSA_PLUGIN_INFO)hCosaPlugInfo;
+    openvpnmgr_log("COSA_Init --> Entry\n");
 
     COSAGetParamValueByPathNameProc pGetParamValueByPathNameProc = (COSAGetParamValueByPathNameProc)NULL;
     COSASetParamValueByPathNameProc pSetParamValueByPathNameProc = (COSASetParamValueByPathNameProc)NULL;
@@ -99,10 +101,12 @@ COSA_Init
 
     if ( uMaxVersionSupported < THIS_PLUGIN_VERSION )
     {
+        openvpnmgr_log("cosa_init: version is not supported");
       /* this version is not supported */
         return -1;
     }   
     
+    openvpnmgr_log("cosa_init: version is supported"); 
     pPlugInfo->uPluginVersion       = THIS_PLUGIN_VERSION;
     /* register the back-end apis for the data model */
 	pPlugInfo->RegisterFunction(pPlugInfo->hContext, "OpenVPNClient_GetParamBoolValue",  OpenVPNClient_GetParamBoolValue);
@@ -121,40 +125,48 @@ COSA_Init
     pGetParamValueByPathNameProc = (COSAGetParamValueByPathNameProc)pPlugInfo->AcquireFunction("COSAGetParamValueByPathName");
     if( pGetParamValueByPathNameProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pGetParamValueByPathNameProc is not NULL");
         g_GetParamValueByPathNameProc = pGetParamValueByPathNameProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetParamValueByPathNameProc is NULL");
         goto EXIT;
     }
     pSetParamValueByPathNameProc = (COSASetParamValueByPathNameProc)pPlugInfo->AcquireFunction("COSASetParamValueByPathName");
 
     if( pSetParamValueByPathNameProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pSetParamValueByPathNameProc is not NULL");
         g_SetParamValueByPathNameProc = pSetParamValueByPathNameProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pSetParamValueByPathNameProc is NULL");
         goto EXIT;
     }
     pGetStringProc = (COSAGetParamValueStringProc)pPlugInfo->AcquireFunction("COSAGetParamValueString");
 
     if( pGetStringProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pGetStringProc is not NULL");
         g_GetParamValueString = pGetStringProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetStringProc is NULL");
         goto EXIT;
     }
     pGetParamValueUlongProc = (COSAGetParamValueUlongProc)pPlugInfo->AcquireFunction("COSAGetParamValueUlong");
 
     if( pGetParamValueUlongProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pGetParamValueUlongProc is not NULL");
         g_GetParamValueUlong = pGetParamValueUlongProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetParamValueUlongProc is NULL");
         goto EXIT;
     }
 
@@ -162,40 +174,48 @@ COSA_Init
 
     if( pGetParamValueIntProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pGetParamValueIntProc is not NULL");
         g_GetParamValueInt = pGetParamValueIntProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetParamValueIntProc is NULL");
         goto EXIT;
     }
     pGetParamValueBoolProc = (COSAGetParamValueBoolProc)pPlugInfo->AcquireFunction("COSAGetParamValueBool");
 
     if( pGetParamValueBoolProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pGetParamValueBoolProc is not NULL");
         g_GetParamValueBool = pGetParamValueBoolProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetParamValueBoolProc is NULL");
         goto EXIT;
     }
     pSetStringProc = (COSASetParamValueStringProc)pPlugInfo->AcquireFunction("COSASetParamValueString");
 
     if( pSetStringProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pSetStringProc is not NULL");
         g_SetParamValueString = pSetStringProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pSetStringProc is NULL");
         goto EXIT;
     }
     pSetParamValueUlongProc = (COSASetParamValueUlongProc)pPlugInfo->AcquireFunction("COSASetParamValueUlong");
 
     if( pSetParamValueUlongProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pSetParamValueUlongProc is not NULL");
         g_SetParamValueUlong = pSetParamValueUlongProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pSetParamValueUlongProc is NULL");
         goto EXIT;
     }
 
@@ -203,70 +223,84 @@ COSA_Init
 
     if( pSetParamValueIntProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pSetParamValueIntProc is not NULL");
         g_SetParamValueInt = pSetParamValueIntProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pSetParamValueIntProc is NULL");
         goto EXIT;
     }
     pSetParamValueBoolProc = (COSASetParamValueBoolProc)pPlugInfo->AcquireFunction("COSASetParamValueBool");
 
     if( pSetParamValueBoolProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pSetParamValueBoolProc is not NULL");
         g_SetParamValueBool = pSetParamValueBoolProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pSetParamValueBoolProc is NULL");
         goto EXIT;
     }
     pGetInstanceNumbersProc = (COSAGetInstanceNumbersProc)pPlugInfo->AcquireFunction("COSAGetInstanceNumbers");
 
     if( pGetInstanceNumbersProc != NULL)
     {
+        openvpnmgr_log("cosa_init: pGetInstanceNumbersProc is not NULL");
         g_GetInstanceNumbers = pGetInstanceNumbersProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetInstanceNumbersProc is NULL");
         goto EXIT;
     }
     pValInterfaceProc = (COSAValidateHierarchyInterfaceProc)pPlugInfo->AcquireFunction("COSAValidateHierarchyInterface");
 
     if ( pValInterfaceProc )
     {
+        openvpnmgr_log("cosa_init: pValInterfaceProc is not NULL");
         g_ValidateInterface = pValInterfaceProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pValInterfaceProc is NULL");
         goto EXIT;
     }
     pGetRegistryRootFolder = (COSAGetHandleProc)pPlugInfo->AcquireFunction("COSAGetRegistryRootFolder");
 
     if ( pGetRegistryRootFolder != NULL )
     {
+        openvpnmgr_log("cosa_init: pGetRegistryRootFolder is not NULL");
         g_GetRegistryRootFolder = pGetRegistryRootFolder;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetRegistryRootFolder is NULL");
         goto EXIT;
     }
     pGetInsNumberByIndexProc = (COSAGetInstanceNumberByIndexProc)pPlugInfo->AcquireFunction("COSAGetInstanceNumberByIndex");
 
     if ( pGetInsNumberByIndexProc != NULL )
     {
+        openvpnmgr_log("cosa_init: pGetInsNumberByIndexProc is not NULL");
         g_GetInstanceNumberByIndex = pGetInsNumberByIndexProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetInsNumberByIndexProc is NULL");
         goto EXIT;
     }
     pGetInterfaceByNameProc = (COSAGetInterfaceByNameProc)pPlugInfo->AcquireFunction("COSAGetInterfaceByName");
 
     if ( pGetInterfaceByNameProc != NULL )
     {
+        openvpnmgr_log("cosa_init: pGetInterfaceByNameProc is not NULL");
         g_GetInterfaceByName = pGetInterfaceByNameProc;
     }
     else
     {
+        openvpnmgr_log("cosa_init: pGetInterfaceByNameProc is NULL");
         goto EXIT;
     }
 
@@ -274,18 +308,21 @@ COSA_Init
 
     if ( !g_RegisterCallBackAfterInitDml )
     {
+        openvpnmgr_log("cosa_init: g_RegisterCallBackAfterInitDml is NULL");
         goto EXIT;
     }
     g_COSARepopulateTable = (COSARepopulateTableProc)pPlugInfo->AcquireFunction("COSARepopulateTable");
 
     if ( !g_COSARepopulateTable )
     {
+        openvpnmgr_log("cosa_init: g_COSARepopulateTable is NULL");
         goto EXIT;
     }
     /* Get Message Bus Handle */
     g_GetMessageBusHandle = (COSAGetHandleProc)pPlugInfo->AcquireFunction("COSAGetMessageBusHandle");
     if ( g_GetMessageBusHandle == NULL )
     {
+        openvpnmgr_log("cosa_init: g_GetMessageBusHandle is NULL");
         goto EXIT;
     }
 
@@ -299,7 +336,7 @@ COSA_IsObjectSupported
         char*                        pObjName
     )
 {
-    
+    openvpnmgr_log("COSA_IsObjectSupported --> Entry\n");
     return TRUE;
 }
 
@@ -309,5 +346,6 @@ COSA_Unload
         void
     )
 {
+    openvpnmgr_log("COSA_Unload --> Entry\n");
     /* unload the memory here */
 }
