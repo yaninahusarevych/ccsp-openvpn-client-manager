@@ -306,14 +306,14 @@ COSA_Init
         goto EXIT;
     }
 
-    g_RegisterCallBackAfterInitDml = (COSARegisterCallBackAfterInitDmlProc)pPlugInfo->AcquireFunction("COSARegisterCallBackAfterInitDml");
+    pRegisterCallBackAfterInitDmlProc = (COSARegisterCallBackAfterInitDmlProc)pPlugInfo->AcquireFunction("COSARegisterCallBackAfterInitDml");
 
     if ( !g_RegisterCallBackAfterInitDml )
     {
         openvpnmgr_log("cosa_init: g_RegisterCallBackAfterInitDml is NULL");
         goto EXIT;
     }
-    g_COSARepopulateTable = (COSARepopulateTableProc)pPlugInfo->AcquireFunction("COSARepopulateTable");
+    pCOSARepopulateTable = (COSARepopulateTableProc)pPlugInfo->AcquireFunction("COSARepopulateTable");
 
     if ( !g_COSARepopulateTable )
     {
