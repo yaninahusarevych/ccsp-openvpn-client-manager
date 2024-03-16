@@ -32,6 +32,7 @@
 **********************************************************************************/
 
 
+#include <stdio.h>
 #ifdef __GNUC__
 #ifndef _BUILD_ANDROID
 #include <execinfo.h>
@@ -41,6 +42,9 @@
 #include "ssp_global.h"
 #include "stdlib.h"
 #include "ccsp_dm_api.h"
+#include "../../openvpn_runner/process_handler.h"
+#include "common.h"
+#include <string.h>
 
 extern char*                                pComponentName;
 char                                        g_Subsystem[32]         = {0};
@@ -232,6 +236,29 @@ int main(int argc, char* argv[])
 
     pComponentName          = CCSP_COMPONENT_NAME_OPENVPNMGR;
 
+    // create opevpn client
+    Tunnel_t *tunnel = NULL;
+    char *opevpn_args [128] = {
+        "--config",
+        ""
+    };
+
+    for (int i = 0; i < 5;) 
+    {
+        tunnel = tunnels_get_tunnel(i);
+        if (!tunnel || !tunnel->enable)
+        {
+            continue;
+        }
+
+        snprintf(opevpn_args[1], 128, "/etc/openvpn/client%d.ovpn", i);
+
+        if (execute_process("/usr/sbin/openvpn", opevpn_args, &tunnel->process_pid ) != 0)
+        {
+            fprintf(stderr, "Error starting openvpn tunnel %d\n", i);
+        }
+    }
+
 #if  defined(_ANSC_WINDOWSNT)
 
     AnscStartupSocketWrapper(NULL);
@@ -300,6 +327,8 @@ int main(int argc, char* argv[])
 	fprintf(stderr, "Cdm_Term: %s\n", Cdm_StrError(err));
 	exit(1);
 	}
+
+    
 
 	ssp_cancel();
 
