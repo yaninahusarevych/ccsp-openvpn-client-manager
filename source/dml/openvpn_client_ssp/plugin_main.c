@@ -308,16 +308,27 @@ COSA_Init
 
     pRegisterCallBackAfterInitDmlProc = (COSARegisterCallBackAfterInitDmlProc)pPlugInfo->AcquireFunction("COSARegisterCallBackAfterInitDml");
 
-    if ( !g_RegisterCallBackAfterInitDml )
+    if ( pRegisterCallBackAfterInitDmlProc != NULL )
     {
-        openvpnmgr_log("cosa_init: g_RegisterCallBackAfterInitDml is NULL");
+        openvpnmgr_log("cosa_init: pRegisterCallBackAfterInitDmlProc is not NULL");
+        g_RegisterCallBackAfterInitDml = pRegisterCallBackAfterInitDmlProc;
+    }
+    else
+    {
+        openvpnmgr_log("cosa_init: pRegisterCallBackAfterInitDmlProc is NULL");
         goto EXIT;
     }
+
     pCOSARepopulateTable = (COSARepopulateTableProc)pPlugInfo->AcquireFunction("COSARepopulateTable");
 
-    if ( !g_COSARepopulateTable )
+    if ( pCOSARepopulateTable != NULL )
     {
-        openvpnmgr_log("cosa_init: g_COSARepopulateTable is NULL");
+        openvpnmgr_log("cosa_init: pCOSARepopulateTable is not NULL");
+        g_COSARepopulateTable = pCOSARepopulateTable;
+    }
+    else
+    {
+        openvpnmgr_log("cosa_init: pCOSARepopulateTable is NULL");
         goto EXIT;
     }
 
