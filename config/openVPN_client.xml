@@ -2,7 +2,7 @@
 
 <dataModelInfo>
     <version>1</version>
-    <moduleName>X_RDK_OpenVPNClient</moduleName>
+    <moduleName>CcspOpenVPNClientMgr</moduleName>
     <author></author>
     <description>Open VPN extenstion</description>
     <library>
